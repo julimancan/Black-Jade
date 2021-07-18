@@ -36,11 +36,14 @@ const PhotoNav = styled.div`
   align-items: center;
   /* background: red;   */
   /* justify-content: space-between; */
+  h1 {
+    margin-right: 1rem;
+  }
   div {
     display: flex;
     margin: 0 auto;
     transform: translateX(-50%);
-    margin-left: 1ch;
+    /* margin-left: 1ch; */
     p {
       cursor: pointer;
       margin-right: .5ch;
