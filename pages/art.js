@@ -97,7 +97,7 @@ const ArtNav = styled.div`
 `;
 
 const art = () => {
-  const [mode, setMode] = useState("images -");
+  const [mode, setMode] = useState("all -");
 
 
   const pageOptions = ["all -", "images -", "animations"];
