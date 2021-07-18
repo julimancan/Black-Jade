@@ -20,7 +20,7 @@ const contact = () => {
       </p>
       <br/>
       <p>
-        email us at <Link href="mailto:blackjadecollevtive@gmail.com">blackjadecollevtive@gmail.com</Link>
+        email us at <Link href="mailto:blackjadecollective@gmail.com">blackjadecollective@gmail.com</Link>
       </p>
     </ContactWrapper>
   )
