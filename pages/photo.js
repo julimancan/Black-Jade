@@ -40,7 +40,7 @@ const PhotoNav = styled.div`
     display: flex;
     margin: 0 auto;
     transform: translateX(-50%);
-
+    margin-left: 1ch;
     p {
       cursor: pointer;
       margin-right: .5ch;
