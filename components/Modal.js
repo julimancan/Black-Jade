@@ -15,6 +15,7 @@ const ModalWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
   div {
     width: 100vw;
     height: 100vh;
@@ -40,6 +41,7 @@ const ModalWrapper = styled.div`
     width: fit-content;
     height: fit-content;
   }
+  
 `;
 
 const Modal = ({ modalClickHandler, modalInfo }) => {

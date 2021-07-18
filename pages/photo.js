@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Modal from "../components/Modal";
 import Spinner from "../components/Spinner";
+import { useWindowSize } from 'react-use';
 
 
 
@@ -24,7 +25,6 @@ section {
     position: relative;
     margin: 0 auto;
     z-index: 0;
-    background: red;
     width: fit-content;
     height: fit-content;
   }
@@ -50,15 +50,16 @@ const PhotoNav = styled.div`
 
 
 const ImageContainer = styled.div`
-  width: ${({ width }) => width};
-  width: ${({ height }) => height};
+  width: ${({ width }) => width < 700 ? "100%" : width};
   display: flex;
   justify-content: center;
   margin: 0 auto;
   transition: all .2s ease-in-out;
+  max-height: 100vh;
   /* background: red; */
   img {
     /* margin: 0 auto; */
+    object-fit: cover;
   }
   &:hover {
     transform: scale(1.05);
@@ -122,9 +123,13 @@ const Photo = () => {
     };
   }, []);
 
+  const { width } = useWindowSize();
 
   const modeClickHandler = (mode) => setMode(mode);
   const modalClickHandler = (modalInfo, imageDimensions) => {
+    if (width < 700) {
+      return;
+    }
     if (isModalOpen) {
       setIsModalOpen(!isModalOpen);
       setModalInfo({})
@@ -156,12 +161,11 @@ const Photo = () => {
             {mode !== pageOptions[2] && weddingImages.map((image, index) => {
               const imageOrientation = image.width / image.height > 1 ? "horizontal" : "vertical";
               const imageDimensions = {
-                width: imageOrientation === "horizontal" ? "600px" : "267px",
-                height: imageOrientation === "horizontal" ? "400px" : "400px"
-              }
-              console.log(image.public_id)
+                width: width < 700 ? `${width-50}px` : "600px",
+                height: imageOrientation === "horizontal" ? width < 700 ? `${width/1.77}px` : "400px" : "800px"
+              };
               return (
-                <ImageContainer key={index} onClick={() => modalClickHandler(image.public_id, imageDimensions)} width={imageDimensions.width} height={imageDimensions.height}>
+                <ImageContainer key={index} onClick={() => modalClickHandler(image.public_id, imageDimensions)} width={width} height={imageDimensions.height}>
                   <Image src={`https://res.cloudinary.com/julianb/image/upload/h_400/${image.public_id}.jpg`} alt={""} width={imageDimensions.width} height={imageDimensions.height} />
                 </ImageContainer>
               )
@@ -169,12 +173,11 @@ const Photo = () => {
             {mode !== pageOptions[1] && portraitImages.map((image, index) => {
               const imageOrientation = image.width / image.height > 1 ? "horizontal" : "vertical";
               const imageDimensions = {
-                width: imageOrientation === "horizontal" ? "600px" : "267px",
-                height: imageOrientation === "horizontal" ? "400px" : "400px"
-              }
-              console.log(image.public_id)
+                width: width < 700 ? `${width-50}px` : "600px",
+                height: imageOrientation === "horizontal" ? width < 700 ? `${width/1.77}px` : "400px" : "800px"
+              };
               return (
-                <ImageContainer key={index} onClick={() => modalClickHandler(image.public_id, imageDimensions)} width={imageDimensions.width} height={imageDimensions.height}>
+                <ImageContainer key={index} onClick={() => modalClickHandler(image.public_id, imageDimensions)} width={width} height={imageDimensions.height}>
                   <Image src={`https://res.cloudinary.com/julianb/image/upload/h_400/${image.public_id}.jpg`} alt={""} width={imageDimensions.width} height={imageDimensions.height} />
                 </ImageContainer>
               )
