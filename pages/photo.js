@@ -8,27 +8,33 @@ import { useWindowSize } from 'react-use';
 
 
 const PhotoWrapper = styled.main`
-padding: 1rem;
-position: relative;
-* {
-  /* border: 1px solid; */
-}
-section {
-  margin: 1rem 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: .5rem;
-  /* background-color: red; */
-  justify-content: center;
-  align-content: center;
-  .spinner {
-    position: relative;
-    margin: 0 auto;
-    z-index: 0;
-    width: fit-content;
-    height: fit-content;
+  padding: 1rem;
+  position: relative;
+  * {
+    /* border: 1px solid; */
   }
-}
+  section {
+    margin: 1rem 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: .5rem;
+    /* background-color: red; */
+    justify-content: center;
+    align-content: center;
+    .spinner {
+      position: relative;
+      margin: 0 auto;
+      z-index: 0;
+      width: fit-content;
+      height: fit-content;
+    }
+  }
+  .card-tall {
+    grid-row: span 2 / auto;
+  }
+  .card-wide {
+    grid-column: span 2 / auto
+  }
 `;
 
 const PhotoNav = styled.div`
@@ -56,16 +62,20 @@ const ImageContainer = styled.div`
   width: ${({ width }) => width < 700 ? "100%" : width};
   display: flex;
   justify-content: center;
-  margin: 0 auto;
+  margin: 1rem auto;
   transition: all .2s ease-in-out;
+  height: ${({ height }) => height};  
+
   /* background: red; */
   img {
     /* margin: 0 auto; */
     object-fit: cover;
   }
   @media (min-width: 800px) {
+    margin: 0 auto;
+    min-height: 450px;
     &:hover {
-      transform: scale(1.05);
+      /* transform: scale(1.05); */
     }
   }
 `;
@@ -144,7 +154,15 @@ const Photo = () => {
       imageDimensions: imageDimensions
     });
   }
-
+  const imageHeight = (imageOrientation, width) => {
+    if (imageOrientation === "horizontal") {
+      if (width < 800) {
+        return `${width / 1.77}px`;
+      }
+        return `${width / 4.57}px`;
+    }
+    return `${width / 1.66}px`;
+  };
   return (
     <PhotoWrapper>
       <PhotoNav>
@@ -165,11 +183,12 @@ const Photo = () => {
             {mode !== pageOptions[2] && weddingImages.map((image, index) => {
               const imageOrientation = image.width / image.height > 1 ? "horizontal" : "vertical";
               const imageDimensions = {
-                width: width < 700 ? `${width-50}px` : "600px",
-                height: imageOrientation === "horizontal" ? `${width/1.77}px` : `${width/.86}px`
+                width: `${width - 50}px`,
+                height: imageHeight(imageOrientation, width)
               };
+              console.log({ imageOrientation }, { imageDimensions })
               return (
-                <ImageContainer key={index} onClick={() => modalClickHandler(image.public_id, imageDimensions)} width={width} height={imageDimensions.height}>
+                <ImageContainer className={imageOrientation === "vertical" ? "card-tall" : ""} key={index} onClick={() => modalClickHandler(image.public_id, imageDimensions)} width={width} height={imageDimensions.height}>
                   <Image src={`https://res.cloudinary.com/julianb/image/upload/w_auto,c_scale/${image.public_id}.jpg`} alt={""} width={imageDimensions.width} height={imageDimensions.height} />
                 </ImageContainer>
               )
@@ -177,11 +196,11 @@ const Photo = () => {
             {mode !== pageOptions[1] && portraitImages.map((image, index) => {
               const imageOrientation = image.width / image.height > 1 ? "horizontal" : "vertical";
               const imageDimensions = {
-                width: width < 700 ? `${width-50}px` : "600px",
-                height: imageOrientation === "horizontal" ? `${width/1.77}px` : `${width/.86}px`
+                width: `${width - 50}px`,
+                height: imageHeight(imageOrientation, width)
               };
               return (
-                <ImageContainer key={index} onClick={() => modalClickHandler(image.public_id, imageDimensions)} width={width} height={imageDimensions.height}>
+                <ImageContainer className={imageOrientation === "vertical" ? "card-tall" : ""} key={index} onClick={() => modalClickHandler(image.public_id, imageDimensions)} width={width} height={imageDimensions.height}>
                   <Image src={`https://res.cloudinary.com/julianb/image/upload/w_auto,c_scale/${image.public_id}.jpg`} alt={""} width={imageDimensions.width} height={imageDimensions.height} />
                 </ImageContainer>
               )
