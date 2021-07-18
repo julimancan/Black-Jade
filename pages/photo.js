@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 const PhotoWrapper = styled.main`
@@ -15,6 +15,15 @@ section {
   align-items: center;
   div {
     margin: 0 auto;
+    width: 350px;
+    position: relative;
+    aspect-ratio: 19/6;
+    max-height: 700px;
+    min-height: 500px;
+    img {
+      /* width: 100px; */
+      /* position: relative; */
+    }
   }
 }
 `;
@@ -28,6 +37,7 @@ const PhotoNav = styled.div`
     display: flex;
     margin: 0 auto;
     transform: translateX(-50%);
+
     p {
       cursor: pointer;
       margin-right: .5ch;
@@ -35,17 +45,56 @@ const PhotoNav = styled.div`
   }
 `;
 
+
+const ImageContainer = styled.div`
+  width: ${({ width }) => width };
+  width: ${({ height }) => height };
+  img {
+  }
+`;
+
 const SelectedOption = styled.p`
   border-bottom: ${({ selected }) => selected ? "1px solid" : "none"}
 `;
 
-const images = [];
+const photoGalleryOptions = [
+  { name: "wedding", albumId: "wedding" },
+  { name: "portraits", albumId: "portraits" },
+]
+
+
 
 const Photo = () => {
-  const [mode, setMode] = useState("images -");
+  const [mode, setMode] = useState("all -");
+  const [loading, setIsLoading] = useState(true);
+  const [weddingImages, setWeddingImages] = useState([]);
+  const [portraitImages, setPortraitImages] = useState([]);
 
 
-  const pageOptions = ["all -", "images -", "animations"];
+
+  const pageOptions = ["all -", "weddings -", "portraits"];
+
+
+  useEffect(() => {
+    fetch(`https://res.cloudinary.com/julianb/image/list/${photoGalleryOptions[0].albumId}.json`)
+      .then(res => res.json())
+      .then(data => {
+        setWeddingImages(data.resources);
+      })
+      .catch(err => console.log(err))
+    fetch(`https://res.cloudinary.com/julianb/image/list/${photoGalleryOptions[1].albumId}.json`)
+      .then(res => res.json())
+      .then(data => {
+        setPortraitImages(data.resources);
+        setIsLoading(false);
+      })
+      .catch(err => console.log(err))
+
+    return () => {
+    }
+  }, []);
+
+  const modeClickHandler = (mode) => setMode(mode);
 
   return (
     <PhotoWrapper>
@@ -58,13 +107,30 @@ const Photo = () => {
         </div>
       </PhotoNav>
       <section>
-        {mode !== pageOptions[2] && images.map((art, index) => (
-          <div key={index}>
-            <Image src={art.path} alt={art.name} width="350px" height="350px" />
-            {/* <h2>{art.name}</h2> */}
-            {/* <h2>{art.artist}</h2> */}
-          </div>
-        ))}
+        {loading ? (
+          <h1>Loading!!!</h1>
+        ) : (
+          <>
+            {mode !== pageOptions[2] && weddingImages.map((image, index) => {
+              const imageOrientation = image.width/image.height > 1 ? "horizontal" : "vertical";
+              const imageDimensions = {
+                width:  imageOrientation === "horizontal" ? "700px" : "350px",
+                height: "500px"
+              }
+              return (
+              <ImageContainer key={index}  width={imageDimensions.width} height={imageDimensions.height}>
+                <Image  src={`https://res.cloudinary.com/julianb/image/upload/v${image.version}/${image.public_id}.jpg`} alt={""} width={imageDimensions.width} height={imageDimensions.height} />
+                {console.log({imageOrientation})}
+              </ImageContainer>
+            )})}
+            {mode !== pageOptions[1] && portraitImages.map((image, index) => (
+              <ImageContainer key={index} >
+                <Image  src={`https://res.cloudinary.com/julianb/image/upload/v${image.version}/${image.public_id}.jpg`} alt={""} width={image.width} height={image.height} />
+                {console.log(image.width)}
+              </ImageContainer>
+            ))}
+          </>
+        )}
       </section>
 
     </PhotoWrapper>

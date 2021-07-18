@@ -104,7 +104,7 @@ const Art = () => {
 
   const pageOptions = ["all -", "images -", "animations"];
 
-  const modeClickHandler = (mode) => { setMode(mode); console.log(mode); }
+  const modeClickHandler = (mode) => setMode(mode);
   return (
     <ArtWrapper>
       <ArtNav>
