@@ -55,14 +55,15 @@ const ImageContainer = styled.div`
   justify-content: center;
   margin: 0 auto;
   transition: all .2s ease-in-out;
-  max-height: 100vh;
   /* background: red; */
   img {
     /* margin: 0 auto; */
     object-fit: cover;
   }
-  &:hover {
-    transform: scale(1.05);
+  @media (min-width: 800px) {
+    &:hover {
+      transform: scale(1.05);
+    }
   }
 `;
 
@@ -162,11 +163,11 @@ const Photo = () => {
               const imageOrientation = image.width / image.height > 1 ? "horizontal" : "vertical";
               const imageDimensions = {
                 width: width < 700 ? `${width-50}px` : "600px",
-                height: imageOrientation === "horizontal" ? width < 700 ? `${width/1.77}px` : "400px" : "800px"
+                height: imageOrientation === "horizontal" ? `${width/1.77}px` : `${width/.86}px`
               };
               return (
                 <ImageContainer key={index} onClick={() => modalClickHandler(image.public_id, imageDimensions)} width={width} height={imageDimensions.height}>
-                  <Image src={`https://res.cloudinary.com/julianb/image/upload/h_400/${image.public_id}.jpg`} alt={""} width={imageDimensions.width} height={imageDimensions.height} />
+                  <Image src={`https://res.cloudinary.com/julianb/image/upload/w_auto,c_scale/${image.public_id}.jpg`} alt={""} width={imageDimensions.width} height={imageDimensions.height} />
                 </ImageContainer>
               )
             })}
@@ -174,11 +175,11 @@ const Photo = () => {
               const imageOrientation = image.width / image.height > 1 ? "horizontal" : "vertical";
               const imageDimensions = {
                 width: width < 700 ? `${width-50}px` : "600px",
-                height: imageOrientation === "horizontal" ? width < 700 ? `${width/1.77}px` : "400px" : "800px"
+                height: imageOrientation === "horizontal" ? `${width/1.77}px` : `${width/.86}px`
               };
               return (
                 <ImageContainer key={index} onClick={() => modalClickHandler(image.public_id, imageDimensions)} width={width} height={imageDimensions.height}>
-                  <Image src={`https://res.cloudinary.com/julianb/image/upload/h_400/${image.public_id}.jpg`} alt={""} width={imageDimensions.width} height={imageDimensions.height} />
+                  <Image src={`https://res.cloudinary.com/julianb/image/upload/w_auto,c_scale/${image.public_id}.jpg`} alt={""} width={imageDimensions.width} height={imageDimensions.height} />
                 </ImageContainer>
               )
             })}
