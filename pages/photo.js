@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Modal from "../components/Modal";
-import { Grid } from "react-awesome-spinners";
+import Spinner from "../components/Spinner";
 
 
 
@@ -149,7 +149,7 @@ const Photo = () => {
       <section>
         {loading ? (
           <div className="spinner">
-            <Grid color="black" />
+            <Spinner color="black" />
           </div>
         ) : (
           <>

@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { stylingVariables } from "./stylingVariables";
 import { AiOutlineClose } from "react-icons/ai";
 import Image from "next/image";
-import { Grid } from "react-awesome-spinners";
+import Spinner from "./Spinner";
 
 const ModalWrapper = styled.div`
   background: ${stylingVariables.pageTextcolor};
@@ -56,7 +56,7 @@ const Modal = ({ modalClickHandler, modalInfo }) => {
       </div>
       <div className="spinner">
 
-        <Grid color="white" />
+        <Spinner color="white" />
       </div>
     </ModalWrapper>
   )
