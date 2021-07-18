@@ -96,9 +96,11 @@ const ArtNav = styled.div`
   }
 `;
 
+const SelectedOption = styled.p`
+  border-bottom: ${({ selected }) => selected ? "1px solid" : "none"}
+`;
 const Art = () => {
-  const [mode, setMode] = useState("all -");
-
+  const [mode, setMode] = useState("images -");
 
   const pageOptions = ["all -", "images -", "animations"];
 
@@ -109,20 +111,20 @@ const Art = () => {
         <h1>Art/Design</h1>
         <div>
           {pageOptions.map((option, index) => (
-            <p key={index} onClick={() => modeClickHandler(option)}>{option}</p>
+            <SelectedOption selected={mode === option} key={index} onClick={() => modeClickHandler(option)}>{option}</SelectedOption>
           ))}
         </div>
       </ArtNav>
       <section>
         {mode !== pageOptions[2] && images.map((art, index) => (
           <div key={index}>
-            <Image src={art.path} alt={art.name} width="300px" height="300px" />
+            <Image src={art.path} alt={art.name} width="350px" height="350px" />
             {/* <h2>{art.name}</h2> */}
             {/* <h2>{art.artist}</h2> */}
           </div>
         ))}
         {mode !== pageOptions[1] && videos.map((video, index) => (
-          <iframe src={`https://www.youtube.com/embed/${video.path}?controls=0&autoplay=1&loop=1&rel=0&showinfo=0&mute=1&autohide=1`} key={index} width="300px" height="300px" loop muted frameBorder='0'
+          <iframe src={`https://www.youtube.com/embed/${video.path}?controls=0&autoplay=1&loop=1&rel=0&showinfo=0&mute=1&autohide=1`} key={index} width="350px" height="350px" loop muted frameBorder='0'
             // controls="0"
             title='video'
 

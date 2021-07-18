@@ -118,7 +118,6 @@ const NavigationItem = styled.li`
 
 
 const BurgerMenu = ({ navOpen, setNavOpen, closeCheckoutAndNav, currentPage }) => {
-
   return (
     <NavContainer open={navOpen} >
       <BurgerContainer open={navOpen} onClick={() => setNavOpen(!navOpen)} >

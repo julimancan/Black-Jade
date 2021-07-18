@@ -3,7 +3,7 @@ import { useState } from "react";
 import BurgerMenu from "./BurgerMenu";
 import { siteFonts } from "../stylingVariables";
 
-const Header = () => {
+const Header = ({ currentPage }) => {
   const [navOpen, setNavOpen] = useState(false);
 
   
@@ -20,7 +20,7 @@ const Header = () => {
         <link rel="shortcut icon" href="/EuniceKeitan-LYWD.ico" />
         <title>Black Jade Collective</title>
       </Head>
-      <BurgerMenu navOpen={navOpen} setNavOpen={setNavOpen} closeCheckoutAndNav={closeCheckoutAndNav} />
+      <BurgerMenu currentPage={currentPage} navOpen={navOpen} setNavOpen={setNavOpen} closeCheckoutAndNav={closeCheckoutAndNav} />
 
     </div>
   )
