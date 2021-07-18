@@ -5,26 +5,17 @@ import { useEffect, useState } from "react";
 
 const PhotoWrapper = styled.main`
 padding: 1rem;
+* {
+  /* border: 1px solid; */
+}
 section {
   margin: 1rem 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: .5rem;
   /* background-color: red; */
   justify-content: center;
-  align-items: center;
-  div {
-    margin: 0 auto;
-    width: 350px;
-    position: relative;
-    aspect-ratio: 19/6;
-    max-height: 700px;
-    min-height: 500px;
-    img {
-      /* width: 100px; */
-      /* position: relative; */
-    }
-  }
+  align-content: center;
 }
 `;
 
@@ -49,7 +40,12 @@ const PhotoNav = styled.div`
 const ImageContainer = styled.div`
   width: ${({ width }) => width };
   width: ${({ height }) => height };
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  /* background: red; */
   img {
+    /* margin: 0 auto; */
   }
 `;
 
@@ -114,21 +110,30 @@ const Photo = () => {
             {mode !== pageOptions[2] && weddingImages.map((image, index) => {
               const imageOrientation = image.width/image.height > 1 ? "horizontal" : "vertical";
               const imageDimensions = {
-                width:  imageOrientation === "horizontal" ? "700px" : "350px",
-                height: "500px"
+                width:  imageOrientation === "horizontal" ? "600px" : "267px",
+                height: imageOrientation === "horizontal" ? "400px" : "400px"
               }
+              console.log(image.public_id)
               return (
               <ImageContainer key={index}  width={imageDimensions.width} height={imageDimensions.height}>
-                <Image  src={`https://res.cloudinary.com/julianb/image/upload/v${image.version}/${image.public_id}.jpg`} alt={""} width={imageDimensions.width} height={imageDimensions.height} />
+                <Image  src={`https://res.cloudinary.com/julianb/image/upload/h_400/${image.public_id}.jpg`} alt={""} width={imageDimensions.width} height={imageDimensions.height} />
                 {console.log({imageOrientation})}
               </ImageContainer>
             )})}
-            {mode !== pageOptions[1] && portraitImages.map((image, index) => (
-              <ImageContainer key={index} >
-                <Image  src={`https://res.cloudinary.com/julianb/image/upload/v${image.version}/${image.public_id}.jpg`} alt={""} width={image.width} height={image.height} />
-                {console.log(image.width)}
+            {mode !== pageOptions[1] && portraitImages.map((image, index) => {
+              const imageOrientation = image.width/image.height > 1 ? "horizontal" : "vertical";
+              const imageDimensions = {
+                width:  imageOrientation === "horizontal" ? "600px" : "267px",
+                height: imageOrientation === "horizontal" ? "400px" : "400px"
+              }
+              console.log(image.public_id)
+              return (
+              <ImageContainer key={index}  width={imageDimensions.width} height={imageDimensions.height}>
+                <Image  src={`https://res.cloudinary.com/julianb/image/upload/h_400/${image.public_id}.jpg`} alt={""} width={imageDimensions.width} height={imageDimensions.height} />
+                {console.log({imageOrientation})}
               </ImageContainer>
-            ))}
+            )})}
+        
           </>
         )}
       </section>
