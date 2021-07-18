@@ -82,28 +82,47 @@ section {
 
 const ArtNav = styled.div`
   display: flex;
+  align-items: center;
+  /* background: red;   */
+  /* justify-content: space-between; */
+  div {
+    display: flex;
+    margin: 0 auto;
+    transform: translateX(-50%);
+    p {
+      cursor: pointer;
+      margin-right: .5ch;
+    }
+  }
 `;
 
 const art = () => {
-  const [ mode , setMode ] = useState("");
+  const [mode, setMode] = useState("images -");
 
+
+  const pageOptions = ["all -", "images -", "animations"];
+
+  const modeClickHandler = (mode) => { setMode(mode); console.log(mode); }
   return (
     <ArtWrapper>
       <ArtNav>
-      <h1>Art/Design</h1>
-      <h2 onClick={() => setMode("images")}>images /</h2>
-      <h2 onClick={() => setMode("animations")}>animations</h2>
+        <h1>Art/Design</h1>
+        <div>
+          {pageOptions.map((option, index) => (
+            <p key={index} onClick={() => modeClickHandler(option)}>{option}</p>
+          ))}
+        </div>
       </ArtNav>
       <section>
-        {mode === "" || mode === "images" && images.map((art, index) => (
+        {mode !== pageOptions[2] && images.map((art, index) => (
           <div key={index}>
             <Image src={art.path} alt={art.name} width="300px" height="300px" />
             {/* <h2>{art.name}</h2> */}
             {/* <h2>{art.artist}</h2> */}
           </div>
         ))}
-        {mode === "" && mode === "animations" && videos.map((video, index) => (
-          <iframe src={`https://www.youtube.com/embed/${video.path}?controls=0&autoplay=1&loop=1&rel=0&showinfo=0&mute=1&autohide=1`} key={index} width="300px" height="300px"  loop muted frameBorder='0'
+        {mode !== pageOptions[1] && videos.map((video, index) => (
+          <iframe src={`https://www.youtube.com/embed/${video.path}?controls=0&autoplay=1&loop=1&rel=0&showinfo=0&mute=1&autohide=1`} key={index} width="300px" height="300px" loop muted frameBorder='0'
             // controls="0"
             title='video'
 
