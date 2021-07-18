@@ -96,7 +96,7 @@ const ArtNav = styled.div`
   }
 `;
 
-const art = () => {
+const Art = () => {
   const [mode, setMode] = useState("all -");
 
 
@@ -133,4 +133,4 @@ const art = () => {
   )
 };
 
-export default art;
+export default Art;
