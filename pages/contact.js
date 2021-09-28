@@ -16,7 +16,7 @@ const contact = () => {
     <ContactWrapper>
       <h1>Contact Us</h1>
       <p>
-        We would love to discuss your project and how we can help you make it better.
+        We would love to discuss your projects and how we can help you make it better.
       </p>
       <br/>
       <p>
