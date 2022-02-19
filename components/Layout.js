@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
 import { useRouter } from "next/dist/client/router";
+import { useEffect } from "react";
+import { useGlobalState } from "../state";
 import Header from "./HeaderComponents/Header";
 import { siteFonts, stylingVariables } from "./stylingVariables";
 
@@ -63,8 +65,11 @@ main {
 const Layout = ({ children }) => {
   const route = useRouter();
   const currentPage = route.pathname;
+  const [siteSettings] = useGlobalState("siteSettings");
+  const fontName = fontUrl => fontUrl.split("production/")[1].split(".ttf")[0];
+  if (siteSettings.h1) console.log(fontName(siteSettings.h1.fontUrl))
   return (
-    <LayoutWrapper currentPage={currentPage}>
+    <LayoutWrapper currentPage={currentPage} siteSettings={siteSettings}>
       <Header currentPage={currentPage}/>
       { children}
     </LayoutWrapper>

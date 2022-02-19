@@ -1,6 +1,9 @@
 import styled from "@emotion/styled";
+import { useEffect } from "react";
 import HomeSlideShow from "../components/HomeComponents/HomeSlideShow";
 import ServiceItem from "../components/HomeComponents/ServiceItem";
+import { getSiteSettings } from "../lib/api";
+import { useGlobalState } from "../state";
 
 
 const serviceItems = [
@@ -45,10 +48,25 @@ const ServiceList = styled.ul`
     opacity: 1;
   }
 }
-`
-export default function Home() {
+`;
+
+export async function getServerSideProps(context) {
+  const siteConfig = await getSiteSettings();
+  console.log({context})
+  return {
+    props: {
+      siteConfig
+    }
+  }
+}
+export default function Home({siteConfig}) {
+  const setSiteSettings = useGlobalState("siteSettings")[1];
+  useEffect(() => {
+    setSiteSettings({...siteConfig});
+  }, []);
+
   return (
-    <HomeWrapper >
+    <HomeWrapper>
        <ServiceList>
         {serviceItems.map((service, index) => (
           <ServiceItem serviceId={index} key={index} url={service.url} name={service.name} />
