@@ -47,8 +47,8 @@ const ServiceList = styled.ul`
 
 export async function getServerSideProps() {
   const siteConfig = await getSiteSettings();
-  const content = await getHomepageItems();
   const navMenuItems = await getNavigationMenu();
+  const content = await getHomepageItems();
 
   return {
     props: {

@@ -22,7 +22,7 @@ const Burger = styled.div`
   display: block;
   width: 40px;
   height: 3px;
-  background: ${({ open, currentPage, siteSettings }) => open ? "none" : currentPage === "/" ? siteSettings.colors?.menuBarColor : siteSettings.colors?.homepageTextcolor};
+  background: ${({ open, currentPage, siteSettings }) => open ? "none" : currentPage === "/" ? siteSettings.colors?.menuBarColor : siteSettings.colors?.menuBgColor};
   border-radius: 5px;
   align-self: center;
   transition: width ${transitionDuration}, background ${transitionDuration};  
@@ -31,7 +31,7 @@ const Burger = styled.div`
     border-radius: 5px;
     width: ${({ open }) => open ? "40px" : "50px"};
     height: 5px;
-    background: ${({ open, currentPage, siteSettings }) => open ? siteSettings.colors?.menuTextColor : currentPage === "/" ? siteSettings.colors?.menuBarColor : siteSettings.colors?.homepageTextcolor};
+    background: ${({ open, currentPage, siteSettings }) => open ? siteSettings.colors?.menuTextColor : currentPage === "/" ? siteSettings.colors?.menuBarColor : siteSettings.colors?.menuBgColor};
     position: absolute;
     transition: background ${transitionDuration}, top ${transitionDuration}, bottom ${transitionDuration} , transform ${transitionDuration}, width ${transitionDuration};  
   }
@@ -102,10 +102,7 @@ const NavigationItem = styled.li`
 `;
 
 
-const getNavItems = async () => {
-  const items = await getNavigationMenu();
-  return items;
-}
+
 
 
 const BurgerMenu = ({ navOpen, setNavOpen, closeCheckoutAndNav, currentPage }) => {
