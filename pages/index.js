@@ -1,15 +1,10 @@
 import styled from "@emotion/styled";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import siteSettings from "../../studio/schemas/siteSettings";
 import HomeSlideShow from "../components/HomeComponents/HomeSlideShow";
 import ServiceItem from "../components/HomeComponents/ServiceItem";
-import { getSiteSettings } from "../lib/api";
+import { getHomepageItems, getNavigationMenu, getSiteSettings } from "../lib/api";
 import { useGlobalState } from "../state";
-
-
-const serviceItems = [
-  { name: "Design/Art", url: "/art" },
-  { name: "Photography", url: "/photo" },
-];
 
 const HomeWrapper = styled.main`
   display: flex;
@@ -50,29 +45,35 @@ const ServiceList = styled.ul`
 }
 `;
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
   const siteConfig = await getSiteSettings();
-  console.log({context})
+  const content = await getHomepageItems();
+  const navMenuItems = await getNavigationMenu();
+
   return {
     props: {
-      siteConfig
+      siteConfig,
+      content,
+      navMenuItems
     }
   }
 }
-export default function Home({siteConfig}) {
+export default function Home({siteConfig, content, navMenuItems}) {
   const setSiteSettings = useGlobalState("siteSettings")[1];
+  const setNavMenuItems = useGlobalState("navMenuItems")[1];
   useEffect(() => {
     setSiteSettings({...siteConfig});
+    setNavMenuItems(navMenuItems.items);
   }, []);
-
+  console.log('navmenuItems', navMenuItems)
   return (
     <HomeWrapper>
        <ServiceList>
-        {serviceItems.map((service, index) => (
-          <ServiceItem serviceId={index} key={index} url={service.url} name={service.name} />
+        {content.links.map((link, index) => (
+          <ServiceItem serviceId={index} key={index} url={link.linkTo} name={link.linkName} />
         ))}
       </ServiceList> 
-      <HomeSlideShow />
+      <HomeSlideShow photos={content.bgPhotos}/>
     </HomeWrapper>
   )
 }

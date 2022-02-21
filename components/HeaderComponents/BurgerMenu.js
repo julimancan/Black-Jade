@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import Link from 'next/link';
-import menuItems from './menuItems';
-import { stylingVariables } from '../stylingVariables';
+import { useGlobalState } from '../../state';
+import { getNavigationMenu } from '../../lib/api';
 
 const transitionDuration = ".4s";
 
@@ -22,7 +22,7 @@ const Burger = styled.div`
   display: block;
   width: 40px;
   height: 3px;
-  background: ${({ open, currentPage }) => open ? "none" : currentPage === "/" ? stylingVariables.menuBarColor : stylingVariables.pageTextcolor};
+  background: ${({ open, currentPage, siteSettings }) => open ? "none" : currentPage === "/" ? siteSettings.colors?.menuBarColor : siteSettings.colors?.homepageTextcolor};
   border-radius: 5px;
   align-self: center;
   transition: width ${transitionDuration}, background ${transitionDuration};  
@@ -31,7 +31,7 @@ const Burger = styled.div`
     border-radius: 5px;
     width: ${({ open }) => open ? "40px" : "50px"};
     height: 5px;
-    background: ${({ open, currentPage }) => open ? stylingVariables.menuTextColor : currentPage === "/" ? stylingVariables.menuBarColor : stylingVariables.pageTextcolor};
+    background: ${({ open, currentPage, siteSettings }) => open ? siteSettings.colors?.menuTextColor : currentPage === "/" ? siteSettings.colors?.menuBarColor : siteSettings.colors?.homepageTextcolor};
     position: absolute;
     transition: background ${transitionDuration}, top ${transitionDuration}, bottom ${transitionDuration} , transform ${transitionDuration}, width ${transitionDuration};  
   }
@@ -49,7 +49,7 @@ const Burger = styled.div`
 `;
 
 const NavContainer = styled.nav`
-  background:${stylingVariables.menuBackgroundColor};
+  background:${({siteSettings}) => siteSettings.colors?.menuBgColor};
   opacity: .95;
   position: fixed;
   width: ${({ open }) => open ? "100vw" : 0};
@@ -58,17 +58,6 @@ const NavContainer = styled.nav`
   left: 0;
   z-index: 100;
   transition: width ${transitionDuration};
-   h1 {
-    text-decoration: none;
-    color: ${stylingVariables.menuTextColor};
-    color: white;
-    margin-left: 1rem;
-    /* position: absolute; */
-    /* top: 1.75rem; */
-    /* left: 5rem; */
-    font-size: 3rem;
-    transition: color ${transitionDuration};
-  }
 `;
 
 
@@ -89,16 +78,14 @@ const NavigationItem = styled.li`
   animation-fill-mode: both;
   animation-timing-function: ease-in-out;
     h2 {
-      display: ${({ open }) => open ? "block" : "none"};
-      color: ${stylingVariables.menuTextColor};
+      color: ${({siteSettings}) => siteSettings.colors?.menuTextColor};
       text-transform: uppercase;
-      /* font-weight: bold; */
       margin: 0.3rem;
       cursor: pointer;
       font-size: 1.5rem;
       transition: all .2s ease-in-out;
       &:hover {
-        transform: scale(1.09)
+        transform: scale(1.04)
       }
 
   }
@@ -115,21 +102,27 @@ const NavigationItem = styled.li`
 `;
 
 
+const getNavItems = async () => {
+  const items = await getNavigationMenu();
+  return items;
+}
 
 
 const BurgerMenu = ({ navOpen, setNavOpen, closeCheckoutAndNav, currentPage }) => {
+  const [siteSettings] = useGlobalState("siteSettings");
+  const [navMenuItems] = useGlobalState("navMenuItems");
   return (
-    <NavContainer open={navOpen} >
+    <NavContainer open={navOpen} siteSettings={siteSettings}>
       <BurgerContainer open={navOpen} onClick={() => setNavOpen(!navOpen)} >
-        <Burger open={navOpen}  currentPage={currentPage}/>
+        <Burger open={navOpen}  currentPage={currentPage} siteSettings={siteSettings}/>
       </BurgerContainer>
    
       <NavigationList open={navOpen}>
-        {menuItems.map((item, index) => (
-          <NavigationItem key={index} open={navOpen} index={item.index}>
-            <Link href={item.url}>
+        {navMenuItems.map((item, index) => (
+          <NavigationItem key={index} open={navOpen} index={index} siteSettings={siteSettings}>
+            <Link href={item.linkTo}>
               <h2 onClick={() => closeCheckoutAndNav()}>
-                {item.name}
+                {item.linkName}
               </h2>
             </Link>
           </NavigationItem>

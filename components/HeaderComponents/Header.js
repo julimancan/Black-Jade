@@ -11,49 +11,28 @@ const Header = ({ currentPage }) => {
   const closeCheckoutAndNav = () => {
     setNavOpen(false);
   };
-  console.log('siteSettings', siteSettings)
 
   return (
     <div>
       <Head>
         <html lang="en" />
-        <link
-          rel="preload"
-          href={siteSettings.h1}
-          as="font"
-          crossOrigin=""
-        />
-        <link
-          rel="preload"
-          href={`/fonts/${siteFonts.h1Font}-Regular.ttf`}
-          as="font"
-          crossOrigin=""
-        />
-        <link
-          rel="preload"
-          href={`/fonts/${siteFonts.pFont}-Regular.ttf`}
-          as="font"
-          crossOrigin=""
-        />
-        <link rel="shortcut icon" href="/EuniceKeitan-LYWD.ico" />
-        <title>Black Jade Collective</title>
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="alternate icon" href="/favicon.ico" />
+        <link rel="shortcut icon" href={siteSettings.favicon} />
+        <title>{siteSettings.title}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta charSet="utf-8" />
-        <meta name="description" content={"site description here"} />
+        <meta name="description" content={siteSettings.description} />
         <meta property="og:url" content={"site url"} />
         <meta
           property="og:image"
-          content={"img source for seo"}
+          content={siteSettings.favicon}
         />
-        <meta property="og:title" content={"title for seo"} key="ogtitle" />
+        <meta property="og:title" content={siteSettings.title} key="ogtitle" />
         <meta
           property="og:site_name"
-          content={"site title for seo"}
+          content={siteSettings.title}
           key="ogsitename"
         />
-        <meta property="og:description" content={"site description"} key="ogdesc" />
+        <meta property="og:description" content={siteSettings.description} key="ogdesc" />
       </Head>
       <BurgerMenu
         currentPage={currentPage}
