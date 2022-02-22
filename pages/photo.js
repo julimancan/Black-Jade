@@ -67,10 +67,8 @@ const photo = ({ siteConfig, navMenuItems, photoContent }) => {
 
   const setSiteSettings = useGlobalState("siteSettings")[1];
   const setNavMenuItems = useGlobalState("navMenuItems")[1];
-  useEffect(() => {
-    setSiteSettings({ ...siteConfig });
+    setSiteSettings(siteConfig);
     setNavMenuItems(navMenuItems.items);
-  }, []);
   console.log("photoContent", photoContent);
   const modeClickHandler = (mode) => setMode(mode);
 
