@@ -117,7 +117,7 @@ const BurgerMenu = ({ navOpen, setNavOpen, closeCheckoutAndNav, currentPage }) =
       <NavigationList open={navOpen}>
         {navMenuItems.map((item, index) => (
           <NavigationItem key={index} open={navOpen} index={index} siteSettings={siteSettings}>
-            <Link href={item.linkTo}>
+            <Link href={item.linkTo} passHref>
               <h2 onClick={() => closeCheckoutAndNav()}>
                 {item.linkName}
               </h2>
