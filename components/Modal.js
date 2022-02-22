@@ -6,7 +6,7 @@ import Spinner from "./Spinner";
 
 const ModalWrapper = styled.div`
   background: ${stylingVariables.pageTextcolor};
-  position: fixed;
+  /* position: fixed; */
   width: 100vw;
   height: 100vh;
   top: 0;
@@ -16,10 +16,10 @@ const ModalWrapper = styled.div`
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  div {
+  .modal-image-container {
     width: 100vw;
     height: 100vh;
-    position: absolute;
+    /* position: absolute; */
     z-index: 2;
     img {
       object-fit: cover;
@@ -28,7 +28,7 @@ const ModalWrapper = styled.div`
   svg {
     cursor: pointer;
     font-size: 3rem;
-    position: absolute;
+    /* position: absolute; */
     top: 2rem;
     left: 2rem;
     z-index: 100;
@@ -49,7 +49,7 @@ const Modal = ({ modalClickHandler, modalInfo }) => {
     <ModalWrapper>
 
       <AiOutlineClose onClick={modalClickHandler} />
-      <div>
+      <div className="modal-image-container">
         <Image src={`https://res.cloudinary.com/julianb/image/upload/w_auto,c_scale/${modalInfo.imageId}.jpg`} alt={""}
           // width={modalInfo.imageDimensions.width} 
           // height={modalInfo.imageDimensions.height}

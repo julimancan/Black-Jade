@@ -1,47 +1,43 @@
-import styled from "@emotion/styled";
-import Image from "next/image";
 import { useEffect, useState } from "react";
-import Modal from "../components/Modal";
-import Spinner from "../components/Spinner";
-import { useWindowSize } from 'react-use';
+import {
+  getNavigationMenu,
+  getPhotoContent,
+  getSiteSettings,
+} from "../lib/api";
+import { useGlobalState } from "../state";
+import Head from "next/head";
+import styled from "@emotion/styled";
+import { getAspectRatio } from "../utils/helpers";
 
-
-
-const PhotoWrapper = styled.main`
-  padding: 1rem;
-  position: relative;
-  * {
-    /* border: 1px solid; */
-  }
-  section {
-    margin: 1rem 0;
+const StyledPhotoPage = styled.main`
+  ul {
+    list-style: none;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: .5rem;
-    /* background-color: red; */
-    justify-content: center;
-    align-content: center;
-    .spinner {
-      position: relative;
-      margin: 0 auto;
-      z-index: 0;
-      width: fit-content;
-      height: fit-content;
-    }
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding: 0 1rem;
   }
-  .card-tall {
-    grid-row: span 2 / auto;
+`;
+
+const StyledListItem = styled.li`
+  width: 100%;
+  grid-row: ${({ aspRatio }) => aspRatio < 1 && "span 2 / auto"};
+  img {
+    height: 100%;
+    width: 100%;
+    aspect-ratio: ${({ aspRatio }) => aspRatio};
   }
-  .card-wide {
-    grid-column: span 2 / auto
-  }
+`;
+
+const SelectedOption = styled.p`
+  border-bottom: ${({ selected }) => (selected ? "1px solid" : "none")};
+  cursor: pointer;
+  margin-right: 0.5ch;
 `;
 
 const PhotoNav = styled.div`
   display: flex;
   align-items: center;
-  /* background: red;   */
-  /* justify-content: space-between; */
   h1 {
     margin-right: 1rem;
   }
@@ -49,171 +45,69 @@ const PhotoNav = styled.div`
     display: flex;
     margin: 0 auto;
     transform: translateX(-50%);
-    /* margin-left: 1ch; */
-    p {
-      cursor: pointer;
-      margin-right: .5ch;
-    }
   }
 `;
 
-
-const ImageContainer = styled.div`
-  width: ${({ width }) => width < 700 ? "100%" : width};
-  display: flex;
-  justify-content: center;
-  margin: 1rem auto;
-  transition: all .2s ease-in-out;
-  height: ${({ height }) => height};  
-
-  /* background: red; */
-  img {
-    /* margin: 0 auto; */
-    object-fit: cover;
-  }
-  @media (min-width: 800px) {
-    margin: 0 auto;
-    min-height: 450px;
-    &:hover {
-      /* transform: scale(1.05); */
-    }
-  }
-`;
-
-const SelectedOption = styled.p`
-  border-bottom: ${({ selected }) => selected ? "1px solid" : "none"}
-`;
-
-const photoGalleryOptions = [
-  { name: "wedding", albumId: "wedding" },
-  { name: "portraits", albumId: "portraits" },
-]
-
-
-
-const Photo = () => {
-  const [mode, setMode] = useState("all -");
-  const [loading, setIsLoading] = useState(true);
-  const [weddingImages, setWeddingImages] = useState([]);
-  const [portraitImages, setPortraitImages] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalInfo, setModalInfo] = useState({
-
-  });
-
-
-
-  const pageOptions = ["all -", "weddings -", "portraits"];
-
-
-  useEffect(() => {
-    fetch(`https://res.cloudinary.com/julianb/image/list/${photoGalleryOptions[0].albumId}.json`)
-      .then(res => res.json())
-      .then(data => {
-        setWeddingImages(data.resources);
-      })
-      .catch(err => console.log(err))
-    fetch(`https://res.cloudinary.com/julianb/image/list/${photoGalleryOptions[1].albumId}.json`)
-      .then(res => res.json())
-      .then(data => {
-        setPortraitImages(data.resources);
-        setIsLoading(false);
-      })
-      .catch(err => console.log(err))
-
-    return () => {
-    }
-  }, []);
-  useEffect(() => {
-    const handleEsc = (event) => {
-      if (event.keyCode === 27) {
-        setIsModalOpen(false);
-      }
-    };
-    window.addEventListener('keydown', handleEsc);
-
-    return () => {
-      window.removeEventListener('keydown', handleEsc);
-    };
-  }, []);
-
-  const { width } = useWindowSize();
-
-  const modeClickHandler = (mode) => setMode(mode);
-  const modalClickHandler = (modalInfo, imageDimensions) => {
-    if (width < 700) {
-      return;
-    }
-    if (isModalOpen) {
-      setIsModalOpen(!isModalOpen);
-      setModalInfo({})
-    }
-    setIsModalOpen(!isModalOpen);
-    setModalInfo({
-      imageId: modalInfo,
-      imageDimensions: imageDimensions
-    });
-  }
-  const imageHeight = (imageOrientation, width) => {
-    if (imageOrientation === "horizontal") {
-      if (width < 800) {
-        return `${width / 1.77}px`;
-      }
-        return `${width / 4.57}px`;
-    }
-    return `${width / 1.66}px`;
+export async function getServerSideProps() {
+  const siteConfig = await getSiteSettings();
+  const navMenuItems = await getNavigationMenu();
+  const photoContent = await getPhotoContent();
+  return {
+    props: {
+      siteConfig,
+      navMenuItems,
+      photoContent,
+    },
   };
-  return (
-    <PhotoWrapper>
-      <PhotoNav>
-        <h1>Photography</h1>
-        <div>
-          {pageOptions.map((option, index) => (
-            <SelectedOption selected={mode === option} key={index} onClick={() => modeClickHandler(option)}>{option}</SelectedOption>
-          ))}
-        </div>
-      </PhotoNav>
-      <section>
-        {loading ? (
-          <div className="spinner">
-            <Spinner color="black" />
-          </div>
-        ) : (
-          <>
-            {mode !== pageOptions[2] && weddingImages.map((image, index) => {
-              const imageOrientation = image.width / image.height > 1 ? "horizontal" : "vertical";
-              const imageDimensions = {
-                width: `${width - 50}px`,
-                height: imageHeight(imageOrientation, width)
-              };
-              console.log({ imageOrientation }, { imageDimensions })
-              return (
-                <ImageContainer className={imageOrientation === "vertical" ? "card-tall" : ""} key={index} onClick={() => modalClickHandler(image.public_id, imageDimensions)} width={width} height={imageDimensions.height}>
-                  <Image src={`https://res.cloudinary.com/julianb/image/upload/w_auto,c_scale/${image.public_id}.jpg`} alt={""} width={imageDimensions.width} height={imageDimensions.height} />
-                </ImageContainer>
-              )
-            })}
-            {mode !== pageOptions[1] && portraitImages.map((image, index) => {
-              const imageOrientation = image.width / image.height > 1 ? "horizontal" : "vertical";
-              const imageDimensions = {
-                width: `${width - 50}px`,
-                height: imageHeight(imageOrientation, width)
-              };
-              return (
-                <ImageContainer className={imageOrientation === "vertical" ? "card-tall" : ""} key={index} onClick={() => modalClickHandler(image.public_id, imageDimensions)} width={width} height={imageDimensions.height}>
-                  <Image src={`https://res.cloudinary.com/julianb/image/upload/w_auto,c_scale/${image.public_id}.jpg`} alt={""} width={imageDimensions.width} height={imageDimensions.height} />
-                </ImageContainer>
-              )
-            })}
+}
 
-          </>
-        )}
-      </section>
-      {isModalOpen && (
-        <Modal modalClickHandler={modalClickHandler} modalInfo={modalInfo} />
-      )}
-    </PhotoWrapper>
-  )
+const photo = ({ siteConfig, navMenuItems, photoContent }) => {
+  const pageOptions = ["all -", "weddings -", "portraits"];
+  const [mode, setMode] = useState(pageOptions[0]);
+
+  const setSiteSettings = useGlobalState("siteSettings")[1];
+  const setNavMenuItems = useGlobalState("navMenuItems")[1];
+  useEffect(() => {
+    setSiteSettings({ ...siteConfig });
+    setNavMenuItems(navMenuItems.items);
+  }, []);
+  console.log("photoContent", photoContent);
+  const modeClickHandler = (mode) => setMode(mode);
+
+  return (
+    <StyledPhotoPage>
+      <Head>
+        <title>{photoContent.title}</title>
+        <meta name="description" content={photoContent.description} />
+      </Head>
+      <PhotoNav>
+        <h1>{photoContent.title}</h1>
+        {pageOptions.map((option, index) => (
+          <SelectedOption
+            selected={mode === option}
+            key={index}
+            onClick={() => modeClickHandler(option)}
+          >
+            {option}
+          </SelectedOption>
+        ))}
+      </PhotoNav>
+      <ul>
+        {mode !== pageOptions[2] &&
+          photoContent.weddings.map((photo, index) => (
+            <StyledListItem key={index} aspRatio={getAspectRatio(photo.url)}>
+              <img src={photo.url} alt="" />
+            </StyledListItem>
+          ))}
+        {mode !== pageOptions[1] &&
+          photoContent.portraits.map((photo, index) => (
+            <StyledListItem key={index} aspRatio={getAspectRatio(photo.url)}>
+              <img src={photo.url} alt="" />
+            </StyledListItem>
+          ))}
+      </ul>
+    </StyledPhotoPage>
+  );
 };
 
-export default Photo;
+export default photo;
