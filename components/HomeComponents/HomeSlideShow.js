@@ -16,18 +16,23 @@ const ImageComp = styled.div`
     object-fit: cover;
     top: 0;
     left: 0;
-    filter: grayscale(100%);
+    filter: grayscale(80%);
     /* opacity: 1; */
     background: black;
     background-size: 100vw 100% cover;
     background-position: center;
-    animation: changeOpacity 5s infinite;
-    /* transition: opacity 0.2s ease-in-out; */
-    @keyframes changeOpacity {
-      from {
+    animation: changeOpacity 2s infinite;
+    animation: changeScale 5s infinite;
+    transition: opacity 0.2s ease-in-out;
+    @keyframes changeScale {
+      0% {
         transform: scale(1);
+        opacity: 0
       }
-      to {
+      25% {
+        opacity: 1;
+      }
+      100% {
         transform: scale(1.1);
       }
     }
