@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { useEffect } from "react";
 import HomeSlideShow from "../components/HomeComponents/HomeSlideShow";
 import ServiceItem from "../components/HomeComponents/ServiceItem";
 import {
@@ -63,8 +64,10 @@ export async function getServerSideProps() {
 export default function Home({ siteConfig, content, navMenuItems }) {
   const setSiteSettings = useGlobalState("siteSettings")[1];
   const setNavMenuItems = useGlobalState("navMenuItems")[1];
-  setSiteSettings(siteConfig);
-  setNavMenuItems(navMenuItems.items);
+  useEffect(() => {
+    setSiteSettings(siteConfig);
+    setNavMenuItems(navMenuItems.items);
+  },  [])
   return (
     <HomeWrapper>
       <ServiceList>
