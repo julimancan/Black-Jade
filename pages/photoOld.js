@@ -187,9 +187,9 @@ const PhotoOld = ({ siteConfig, navMenuItems, photoContent }) => {
         </>
         {/* )} */}
       </section>
-      {isModalOpen && (
+      {/* {isModalOpen && (
         <Modal modalClickHandler={modalClickHandler} modalInfo={modalInfo} />
-      )}
+      )} */}
     </PhotoWrapper>
   );
 };
