@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getArtContent, getNavigationMenu, getSiteSettings } from "../lib/api";
 import { useGlobalState } from "../state";
 import { getYoutubeId } from "../utils/helpers";
@@ -58,8 +58,10 @@ const Art = ({ siteConfig, navMenuItems, artItems }) => {
   const [mode, setMode] = useState("images -");
   const setSiteSettings = useGlobalState("siteSettings")[1];
   const setNavMenuItems = useGlobalState("navMenuItems")[1];
-  setSiteSettings(siteConfig);
-  setNavMenuItems(navMenuItems.items);
+  useEffect(() => {
+    setSiteSettings(siteConfig);
+    setNavMenuItems(navMenuItems.items);
+  })
   const pageOptions = ["all -", "images -", "animations"];
 
   const modeClickHandler = (mode) => setMode(mode);

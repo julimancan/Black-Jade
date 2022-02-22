@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   getNavigationMenu,
   getPhotoContent,
@@ -61,14 +61,16 @@ export async function getServerSideProps() {
   };
 }
 
-export default function photoNew ({ siteConfig, navMenuItems, photoContent }) {
+export default function photo({ siteConfig, navMenuItems, photoContent }) {
   const pageOptions = ["all -", "weddings -", "portraits"];
   const [mode, setMode] = useState(pageOptions[0]);
 
   const setSiteSettings = useGlobalState("siteSettings")[1];
   const setNavMenuItems = useGlobalState("navMenuItems")[1];
+  useEffect(() => {
     setSiteSettings(siteConfig);
     setNavMenuItems(navMenuItems.items);
+  },  [])
   console.log("photoContent", photoContent);
   const modeClickHandler = (mode) => setMode(mode);
 
@@ -106,5 +108,4 @@ export default function photoNew ({ siteConfig, navMenuItems, photoContent }) {
       </ul>
     </StyledPhotoPage>
   );
-};
-
+}
