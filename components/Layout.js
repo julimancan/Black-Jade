@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import { useRouter } from "next/dist/client/router";
 import { useEffect, useState } from "react";
-import siteSettings from "../../studio/schemas/siteSettings";
 import { useGlobalState } from "../state";
 import Header from "./HeaderComponents/Header";
 
