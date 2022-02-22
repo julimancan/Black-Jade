@@ -116,12 +116,12 @@ const PhotoOld = ({ siteConfig, navMenuItems, photoContent }) => {
 
   const pageOptions = ["all -", "weddings -", "portraits"];
 
-    window.addEventListener("keydown", handleEsc);
+    // window.addEventListener("keydown", handleEsc);
 
-    return () => {
-      window.removeEventListener("keydown", handleEsc);
-    };
-  }, []);
+    // return () => {
+    //   window.removeEventListener("keydown", handleEsc);
+    // };
+  // }, []);
 
   const modeClickHandler = (mode) => setMode(mode);
   const modalClickHandler = (modalInfo) => {
