@@ -1,8 +1,5 @@
 import styled from "@emotion/styled";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import Modal from "../components/Modal";
-import Spinner from "../components/Spinner";
+import { useState } from "react";
 import { useGlobalState } from "../state";
 import {
   getNavigationMenu,
@@ -111,25 +108,14 @@ const PhotoOld = ({ siteConfig, navMenuItems, photoContent }) => {
   const [modalInfo, setModalInfo] = useState({});
   const setSiteSettings = useGlobalState("siteSettings")[1];
   const setNavMenuItems = useGlobalState("navMenuItems")[1];
-  useEffect(() => {
-    setSiteSettings({ ...siteConfig });
-    setNavMenuItems(navMenuItems.items);
-  }, []);
+  // useEffect(() => {
+  //   setSiteSettings({ ...siteConfig });
+  //   setNavMenuItems(navMenuItems.items);
+  // }, []);
   console.log("photoContent", photoContent);
 
   const pageOptions = ["all -", "weddings -", "portraits"];
 
-  useEffect(() => {
-    setWeddingImages(photoContent.weddings);
-    setPortraitImages(photoContent.portraits);
-    setIsLoading(false);
-  }, []);
-  useEffect(() => {
-    const handleEsc = (event) => {
-      if (event.keyCode === 27) {
-        setIsModalOpen(false);
-      }
-    };
     window.addEventListener("keydown", handleEsc);
 
     return () => {
