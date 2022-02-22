@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { useRouter } from "next/dist/client/router";
-import { useEffect } from "react";
 import { useGlobalState } from "../state";
 import Header from "./HeaderComponents/Header";
 
@@ -74,9 +73,7 @@ const Layout = ({ children }) => {
   const route = useRouter();
   const currentPage = route.pathname;
   const [siteSettings] = useGlobalState("siteSettings");
-  useEffect(() => {
-    console.log("siteSettings.h1", siteSettings.h1);
-  }, [siteSettings])
+
   return (
     <LayoutWrapper currentPage={currentPage} siteSettings={siteSettings}>
       <Header currentPage={currentPage} />
