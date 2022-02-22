@@ -71,7 +71,6 @@ export default function Photo({ siteConfig, navMenuItems, photoContent }) {
     setSiteSettings(siteConfig);
     setNavMenuItems(navMenuItems.items);
   },  [])
-  console.log("photoContent", photoContent);
   const modeClickHandler = (mode) => setMode(mode);
 
   return (
