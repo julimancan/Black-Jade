@@ -61,7 +61,7 @@ export async function getServerSideProps() {
   };
 }
 
-export default function photo({ siteConfig, navMenuItems, photoContent }) {
+export default function Photo({ siteConfig, navMenuItems, photoContent }) {
   const pageOptions = ["all -", "weddings -", "portraits"];
   const [mode, setMode] = useState(pageOptions[0]);
 
