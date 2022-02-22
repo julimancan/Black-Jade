@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useRouter } from "next/dist/client/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useGlobalState } from "../state";
 import Header from "./HeaderComponents/Header";
 
@@ -73,13 +73,10 @@ const LayoutWrapper = styled.div`
 const Layout = ({ children }) => {
   const route = useRouter();
   const currentPage = route.pathname;
-  const [pageLoading, setPageLoading] = useState(true)
   const [siteSettings] = useGlobalState("siteSettings");
   useEffect(() => {
     console.log("siteSettings.h1", siteSettings.h1);
-    setPageLoading(false)
   }, [siteSettings])
-  if (pageLoading) return "loading..........."
   return (
     <LayoutWrapper currentPage={currentPage} siteSettings={siteSettings}>
       <Header currentPage={currentPage} />
