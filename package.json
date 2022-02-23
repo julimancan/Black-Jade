@@ -18,7 +18,8 @@
     "react-dom": "^17.0.2",
     "react-hooks-global-state": "^1.0.2",
     "react-icons": "^4.2.0",
-    "react-use": "^17.2.4"
+    "react-use": "^17.2.4",
+    "usehooks-ts": "^2.4.1"
   },
   "devDependencies": {
     "eslint": "7.30.0",
