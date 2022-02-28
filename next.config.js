@@ -7,4 +7,7 @@ module.exports = {
   images: {
     domains: ['res.cloudinary.com', "cdn.sanity.io"],
   },
+  compiler: {
+    styledComponents: true
+  }
 }
