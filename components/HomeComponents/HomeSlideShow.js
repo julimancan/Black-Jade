@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { wrap } from "popmotion";
 import styled from "@emotion/styled";
 import { useInterval } from 'usehooks-ts'
 import { securePhoto } from "../../utils/helpers";
