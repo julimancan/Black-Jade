@@ -38,11 +38,12 @@ const ServiceList = styled.ul`
   }
 `;
 
-export async function getStaticProps() {
+export async function getStaticProps({ctx}) {
   const siteConfig = await getSiteSettings();
   const navMenuItems = await getNavigationMenu();
   const content = await getHomepageItems();
-
+  console.log('ctx', ctx)
+  
   return {
     props: {
       siteConfig,

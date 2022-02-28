@@ -9,6 +9,7 @@ import Head from "next/head";
 import styled from "@emotion/styled";
 import { getAspectRatio } from "../utils/helpers";
 
+
 const StyledPhotoPage = styled.main`
   ul {
     list-style: none;
@@ -75,10 +76,10 @@ export default function Photo({ siteConfig, navMenuItems, photoContent }) {
 
   return (
     <StyledPhotoPage>
-      <Head>
+      {/* <Head>
         <title>{photoContent.title}</title>
         <meta name="description" content={photoContent.description} />
-      </Head>
+      </Head> */}
       <PhotoNav>
         <h1>{photoContent.title}</h1>
         {pageOptions.map((option, index) => (
