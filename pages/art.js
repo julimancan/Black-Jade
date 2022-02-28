@@ -42,7 +42,7 @@ const SelectedOption = styled.p`
   border-bottom: ${({ selected }) => (selected ? "1px solid" : "none")};
 `;
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const siteConfig = await getSiteSettings();
   const navMenuItems = await getNavigationMenu();
   const artItems = await getArtContent();

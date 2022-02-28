@@ -16,7 +16,7 @@ const ContactWrapper = styled.main`
   }
 `;
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const siteConfig = await getSiteSettings();
   const navMenuItems = await getNavigationMenu();
   return {

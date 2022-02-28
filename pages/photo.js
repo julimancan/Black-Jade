@@ -48,7 +48,7 @@ const PhotoNav = styled.div`
   }
 `;
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const siteConfig = await getSiteSettings();
   const navMenuItems = await getNavigationMenu();
   const photoContent = await getPhotoContent();

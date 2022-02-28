@@ -16,19 +16,9 @@ const ServiceList = styled.ul`
   position: relative;
   z-index: 10;
   list-style: none;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
+  display: grid;
   gap: 2rem;
-  @media (min-width: 768px) {
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-  }
+
   li {
     animation-name: animateIn;
     animation-duration: 350ms;
@@ -48,7 +38,7 @@ const ServiceList = styled.ul`
   }
 `;
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const siteConfig = await getSiteSettings();
   const navMenuItems = await getNavigationMenu();
   const content = await getHomepageItems();

@@ -3,7 +3,7 @@ import { getNavigationMenu, getSiteSettings } from "../lib/api";
 import { useGlobalState } from "../state";
 
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const siteConfig = await getSiteSettings();
   const navMenuItems = await getNavigationMenu();
   return {
