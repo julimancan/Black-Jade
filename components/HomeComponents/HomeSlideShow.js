@@ -53,17 +53,20 @@ const HomeSlideShow = ({ photos }) => {
     },
     isPlaying ? 6000 : null
   )
+  const securePhoto = url => `https${url.split("http")[1]}`;
+
   return (
     <ImageComp arrLength={photos.length}>
-      {photos.map((photo, index) => (
+      {photos.map((photo, index) => {
+        return (
         <StyledImage
           key={index}
-          src={photo.url}
+          src={securePhoto(photo.url)}
           alt={`Black Jade Image Background ${index + 1}`}
           selected={selected === index}
           onClick={nextImage}
         />
-      ))}
+      )})}
     </ImageComp>
   );
 };
