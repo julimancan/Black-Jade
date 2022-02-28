@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { wrap } from "popmotion";
 import styled from "@emotion/styled";
 import { useInterval } from 'usehooks-ts'
+import { securePhoto } from "../../utils/helpers";
 
 const ImageComp = styled.div`
   overflow: hidden;
@@ -53,7 +54,6 @@ const HomeSlideShow = ({ photos }) => {
     },
     isPlaying ? 6000 : null
   )
-  const securePhoto = url => `https${url.split("http")[1]}`;
 
   return (
     <ImageComp arrLength={photos.length}>
