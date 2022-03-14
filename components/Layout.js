@@ -1,23 +1,26 @@
 import styled from "@emotion/styled";
 import { useRouter } from "next/dist/client/router";
 import { useGlobalState } from "../state";
+import Footer from "./Footer";
 import Header from "./HeaderComponents/Header";
 
 const LayoutWrapper = styled.div`
-
   @font-face {
     font-family: ${({ siteSettings }) => siteSettings.fonts?.h1?.title};
-    src: ${({ siteSettings }) => `url(${siteSettings.fonts?.h1?.fontUrl}) format('truetype')`};
+    src: ${({ siteSettings }) =>
+      `url(${siteSettings.fonts?.h1?.fontUrl}) format('truetype')`};
     font-display: swap;
   }
   @font-face {
     font-family: ${({ siteSettings }) => siteSettings.fonts?.h2?.title};
-    src: ${({ siteSettings }) => `url(${siteSettings.fonts?.h2?.fontUrl}) format('truetype')`};
+    src: ${({ siteSettings }) =>
+      `url(${siteSettings.fonts?.h2?.fontUrl}) format('truetype')`};
     font-display: swap;
   }
   @font-face {
     font-family: ${({ siteSettings }) => siteSettings.fonts?.p?.title};
-    src: ${({ siteSettings }) => `url(${siteSettings.fonts?.p?.fontUrl}) format('truetype')`};
+    src: ${({ siteSettings }) =>
+      `url(${siteSettings.fonts?.p?.fontUrl}) format('truetype')`};
     font-display: swap;
   }
 
@@ -73,10 +76,12 @@ const Layout = ({ children }) => {
   const route = useRouter();
   const currentPage = route.pathname;
   const [siteSettings] = useGlobalState("siteSettings");
+  console.log({ siteSettings });
   return (
     <LayoutWrapper currentPage={currentPage} siteSettings={siteSettings}>
       <Header currentPage={currentPage} />
       {children}
+      {siteSettings.email && <Footer siteSettings={siteSettings} currentPage={currentPage} />}
     </LayoutWrapper>
   );
 };

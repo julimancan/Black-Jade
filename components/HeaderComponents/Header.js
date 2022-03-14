@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { useState } from "react";
 import BurgerMenu from "./BurgerMenu";
-import { siteFonts } from "../stylingVariables";
 import { useGlobalState } from "../../state";
 
 const Header = ({ currentPage }) => {

@@ -11,13 +11,29 @@ import { useGlobalState } from "../state";
 
 const HomeWrapper = styled.main`
   display: flex;
+  li:first-of-type {
+    &::after {
+      content: "";
+      position: absolute;
+      color: white;
+      right: -30%;
+      top: 50%;
+      transform: translateY(-35%);
+      height: 10px;
+      width: 10px;
+      background: white;
+      border-radius: 50%;
+    }
+  }
 `;
 const ServiceList = styled.ul`
   position: relative;
   z-index: 10;
   list-style: none;
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
+
 
   li {
     animation-name: animateIn;
@@ -38,11 +54,10 @@ const ServiceList = styled.ul`
   }
 `;
 
-export async function getStaticProps({ctx}) {
+export async function getStaticProps() {
   const siteConfig = await getSiteSettings();
   const navMenuItems = await getNavigationMenu();
   const content = await getHomepageItems();
-  console.log('ctx', ctx)
   
   return {
     props: {

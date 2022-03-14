@@ -30,7 +30,7 @@ const StyledImage = styled.div`
       filter: grayscale(80%);
       background-size: 100vw 100% cover;
       background-position: center;
-      animation: changeScale 6s infinite alternate-reverse;
+      /* animation: changeScale 6s infinite alternate-reverse; */
     }
   }
   @keyframes changeScale {
