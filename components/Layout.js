@@ -32,8 +32,10 @@ const LayoutWrapper = styled.div`
         ? siteSettings.colors?.menuBarColor
         : siteSettings.colors?.menuBgColor};
     white-space: nowrap;
+    letter-spacing: 2px;
   }
   h2 {
+    letter-spacing: 2px;
     font-family: ${({ siteSettings }) => siteSettings.fonts?.h2?.title};
     color: ${({ siteSettings }) => siteSettings.colors?.menuBarColor};
   }

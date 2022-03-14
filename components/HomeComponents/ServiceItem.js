@@ -13,6 +13,7 @@ const ServiceName = styled.h3`
   color: white;
   transition: all .2s ease-in-out;
   cursor: pointer;
+  letter-spacing: 2px;
   &:hover {
     transform: scale(1.1);
   }

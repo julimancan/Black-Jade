@@ -22,7 +22,7 @@ const HomeWrapper = styled.main`
     .logo {
       position: relative;
       img {
-        width: 7rem;
+        width: 6rem;
       }
     }
   }
@@ -32,7 +32,7 @@ const HomeWrapper = styled.main`
       position: absolute;
       color: white;
       top: 50%;
-      right: -30%;
+      right: -1.3rem;
       height: 10px;
       display: none;
       width: 10px;

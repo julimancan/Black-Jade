@@ -11,7 +11,7 @@ const StyledFooter = styled.footer`
       : siteSettings.colors?.menuBgColor};
   left: 50%;
   transform: translateX(-50%);
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin: 3rem auto;
   text-align: center;
 `;

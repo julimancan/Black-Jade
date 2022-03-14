@@ -4,7 +4,7 @@ export const PageNav = styled.div`
   display: flex;
   align-items: center;
   img {
-    width: 7rem;
+    width: 6rem;
     margin-left: 0.5rem;
   }
   h1 {

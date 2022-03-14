@@ -8,7 +8,7 @@ import { useGlobalState } from "../state";
 import { getYoutubeId } from "../utils/helpers";
 
 const ArtWrapper = styled.main`
-  padding: 1rem;
+  padding: 0 .5rem;
 
   .image-collection {
     margin: 1rem 0;

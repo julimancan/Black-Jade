@@ -6,7 +6,7 @@ import { getNavigationMenu } from '../../lib/api';
 const transitionDuration = ".4s";
 
 const BurgerContainer = styled.div`
-  top: ${({currentPage}) => currentPage === "/" ? "2rem" : "2.5rem" } ;
+  top: 2rem;
   right: 2rem;
   position: fixed;
   color: white;
@@ -110,7 +110,7 @@ const BurgerMenu = ({ navOpen, setNavOpen, closeCheckoutAndNav, currentPage }) =
   const [navMenuItems] = useGlobalState("navMenuItems");
   return (
     <NavContainer open={navOpen} siteSettings={siteSettings}>
-      <BurgerContainer open={navOpen} onClick={() => setNavOpen(!navOpen)} currentPage={currentPage}>
+      <BurgerContainer open={navOpen} onClick={() => setNavOpen(!navOpen)} >
         <Burger open={navOpen}  currentPage={currentPage} siteSettings={siteSettings}/>
       </BurgerContainer>
    
