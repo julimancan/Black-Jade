@@ -19,7 +19,8 @@ const Header = ({ currentPage }) => {
           content={siteSettings.colors?.pageBgColor}
         />
         <meta name="description" content={siteSettings.description} />
-        <meta property="og:url" content={"black-jade.com"} /> //TODO!!!!!!
+        {/* TODO!!!!!! */}
+        <meta property="og:url" content={"black-jade.com"} /> 
         <meta property="og:title" content={siteSettings.title} key="ogtitle" />
         <meta
           property="og:description"
