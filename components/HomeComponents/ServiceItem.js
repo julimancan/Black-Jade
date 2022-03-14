@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const ServiceName = styled.h3`
   /* font-weight: 800; */
-  font-size: 2.5rem;
+  font-size: 3rem;
   line-height: 2.5rem;
   text-transform: uppercase;
   margin: 0 auto;

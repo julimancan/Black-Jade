@@ -9,9 +9,9 @@ import Head from "next/head";
 import styled from "@emotion/styled";
 import { getAspectRatio } from "../utils/helpers";
 import { PageNav, SelectedOption } from "../components/pageElements";
+import Link from "next/link";
 
 const StyledPhotoPage = styled.main`
-
   .image-collection {
     list-style: none;
     display: grid;
@@ -63,7 +63,9 @@ export default function Photo({ siteConfig, navMenuItems, photoContent }) {
         <meta name="description" content={photoContent.description} />
       </Head>
       <PageNav>
-        <img src="android-chrome-192x192.png" />
+        <Link href="/">
+          <img src="android-chrome-192x192.png" />
+        </Link>
         <div className="page-nav">
           <h1>{photoContent.title}</h1>
           <ul>

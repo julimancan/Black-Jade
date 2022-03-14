@@ -50,10 +50,14 @@ const HomeSlideShow = ({ photos }) => {
   };
   
   useEffect(() => {
-    setTimeout(() => {
+    let timer = setTimeout(() => {
       setTime(time + 1);
       nextImage();
     }, 6000);
+
+    return () => {
+      clearTimeout(timer)
+    }
   }, [time]);
 
 

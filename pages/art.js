@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { PageNav, SelectedOption } from "../components/pageElements";
 import { getArtContent, getNavigationMenu, getSiteSettings } from "../lib/api";
@@ -50,7 +51,9 @@ const Art = ({ siteConfig, navMenuItems, artItems }) => {
   return (
     <ArtWrapper>
       <PageNav>
-        <img src="android-chrome-192x192.png" />
+        <Link href="/">
+          <img src="android-chrome-192x192.png" />
+        </Link>
         <div className="page-nav">
           <h1>Art/Design</h1>
           <ul>

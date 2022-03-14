@@ -17,7 +17,6 @@ const StyledFooter = styled.footer`
 `;
 
 function Footer({ siteSettings, currentPage }) {
-    console.log({siteSettings})
   return (
     <StyledFooter currentPage={currentPage} siteSettings={siteSettings}>
       <Link href={`mailto:${siteSettings.email}`}>{siteSettings.email}</Link>

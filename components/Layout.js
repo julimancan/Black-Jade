@@ -78,7 +78,7 @@ const Layout = ({ children }) => {
   const route = useRouter();
   const currentPage = route.pathname;
   const [siteSettings] = useGlobalState("siteSettings");
-c  return (
+  return (
     <LayoutWrapper currentPage={currentPage} siteSettings={siteSettings}>
       <Header currentPage={currentPage} />
       {children}
