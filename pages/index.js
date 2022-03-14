@@ -16,13 +16,17 @@ const HomeWrapper = styled.main`
       content: "";
       position: absolute;
       color: white;
-      right: -30%;
       top: 50%;
-      transform: translateY(-35%);
+      right: -30%;
       height: 10px;
+      display: none;
       width: 10px;
+      transform: translateY(-35%);
       background: white;
       border-radius: 50%;
+      @media (min-width: 700px) {
+        display: block;
+      }
     }
   }
 `;
@@ -31,10 +35,12 @@ const ServiceList = styled.ul`
   z-index: 10;
   list-style: none;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 2rem;
 
-
+  @media (min-width: 700px) {
+    flex-direction: row;
+  }
   li {
     animation-name: animateIn;
     animation-duration: 350ms;
@@ -58,7 +64,7 @@ export async function getStaticProps() {
   const siteConfig = await getSiteSettings();
   const navMenuItems = await getNavigationMenu();
   const content = await getHomepageItems();
-  
+
   return {
     props: {
       siteConfig,
@@ -73,7 +79,7 @@ export default function Home({ siteConfig, content, navMenuItems }) {
   useEffect(() => {
     setSiteSettings(siteConfig);
     setNavMenuItems(navMenuItems.items);
-  },  [])
+  }, []);
   return (
     <HomeWrapper>
       <ServiceList>
