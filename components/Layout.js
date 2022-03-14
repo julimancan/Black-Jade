@@ -24,10 +24,8 @@ const LayoutWrapper = styled.div`
     font-display: swap;
   }
 
-  h1,
-  h3 {
+  h1 {
     font-family: ${({ siteSettings }) => siteSettings.fonts?.h1?.title};
-    font-size: clamp(1.5rem, -0.875rem + 8.333vw, 3.5rem);
     font-weight: 400;
     color: ${({ currentPage, siteSettings }) =>
       currentPage === "/"
@@ -37,11 +35,16 @@ const LayoutWrapper = styled.div`
   }
   h2 {
     font-family: ${({ siteSettings }) => siteSettings.fonts?.h2?.title};
-    font-size: clamp(0.7rem, -0.875rem + 5.333vw, 1.5rem);
+    color: ${({ siteSettings }) => siteSettings.colors?.menuBarColor};
+  }
+  h3 {
+    font-family: ${({ siteSettings }) => siteSettings.fonts?.h1?.title};
+    font-weight: 400;
     color: ${({ currentPage, siteSettings }) =>
       currentPage === "/"
         ? siteSettings.colors?.menuBarColor
         : siteSettings.colors?.menuBgColor};
+    white-space: nowrap;
   }
   p {
     font-family: ${({ siteSettings }) => siteSettings.fonts?.p?.title};
@@ -52,7 +55,6 @@ const LayoutWrapper = styled.div`
         : siteSettings.colors?.menuBgColor};
   }
   main {
-    /* display: flex; */
     flex-direction: column;
     align-items: center;
     width: 100%;
@@ -76,12 +78,13 @@ const Layout = ({ children }) => {
   const route = useRouter();
   const currentPage = route.pathname;
   const [siteSettings] = useGlobalState("siteSettings");
-  console.log({ siteSettings });
-  return (
+c  return (
     <LayoutWrapper currentPage={currentPage} siteSettings={siteSettings}>
       <Header currentPage={currentPage} />
       {children}
-      {siteSettings.email && <Footer siteSettings={siteSettings} currentPage={currentPage} />}
+      {siteSettings.email && (
+        <Footer siteSettings={siteSettings} currentPage={currentPage} />
+      )}
     </LayoutWrapper>
   );
 };
