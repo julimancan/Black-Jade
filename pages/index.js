@@ -6,11 +6,22 @@ import {
   getHomepageItems,
   getNavigationMenu,
   getSiteSettings,
+  urlFor,
 } from "../lib/api";
 import { useGlobalState } from "../state";
+import getConfig from "next/config";
 
 const HomeWrapper = styled.main`
   display: flex;
+  .logo-container {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 50;
+    .logo {
+      position: relative;
+    }
+  }
   li:first-of-type {
     &::after {
       content: "";
@@ -64,6 +75,32 @@ export async function getStaticProps() {
   const siteConfig = await getSiteSettings();
   const navMenuItems = await getNavigationMenu();
   const content = await getHomepageItems();
+  const zipUrl = siteConfig?.faviconZip;
+  const AdmZip = require("adm-zip");
+  const http = require("https");
+
+  const publicPath = `${getConfig().serverRuntimeConfig.PROJECT_ROOT}\\public`;
+
+  http.get(zipUrl, (res) => {
+    const data = [];
+    let dataLen = 0;
+
+    res
+      .on("data", (chunk) => {
+        data.push(chunk);
+        dataLen += chunk.length;
+      })
+      .on("end", () => {
+        const buf = Buffer.alloc(dataLen);
+
+        for (let i = 0, len = data.length, pos = 0; i < len; i++) {
+          data[i].copy(buf, pos);
+          pos += data[i].length;
+        }
+        const zip = new AdmZip(buf);
+        zip.extractAllTo(publicPath, true);
+      });
+  });
 
   return {
     props: {
@@ -74,14 +111,23 @@ export async function getStaticProps() {
   };
 }
 export default function Home({ siteConfig, content, navMenuItems }) {
-  const setSiteSettings = useGlobalState("siteSettings")[1];
+  const [siteSettings, setSiteSettings] = useGlobalState("siteSettings");
   const setNavMenuItems = useGlobalState("navMenuItems")[1];
   useEffect(() => {
     setSiteSettings(siteConfig);
     setNavMenuItems(navMenuItems.items);
   }, []);
+  if (!siteSettings) return "loading...";
+
   return (
     <HomeWrapper>
+      <div className="logo-container">
+        <picture className="logo">
+          <img
+            src={siteSettings.logo && urlFor(siteSettings.logo).width(200)}
+          />
+        </picture>
+      </div>
       <ServiceList>
         {content.links.map((link, index) => (
           <ServiceItem

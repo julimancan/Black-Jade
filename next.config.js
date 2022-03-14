@@ -1,3 +1,5 @@
+/** @type {import('next').NextConfig} */
+
 module.exports = {
   reactStrictMode: true,
   env: {
@@ -9,5 +11,8 @@ module.exports = {
   },
   compiler: {
     styledComponents: true
+  },
+  serverRuntimeConfig: {
+    PROJECT_ROOT: __dirname
   }
 }

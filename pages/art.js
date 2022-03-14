@@ -1,13 +1,15 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { PageNav, SelectedOption } from "../components/pageElements";
 import { getArtContent, getNavigationMenu, getSiteSettings } from "../lib/api";
 import { useGlobalState } from "../state";
 import { getYoutubeId } from "../utils/helpers";
 
 const ArtWrapper = styled.main`
   padding: 1rem;
-  section {
+
+  .image-collection {
     margin: 1rem 0;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -20,26 +22,6 @@ const ArtWrapper = styled.main`
       margin: 0 auto;
     }
   }
-`;
-
-const ArtNav = styled.div`
-  display: flex;
-  align-items: center;
-  /* background: red;   */
-  /* justify-content: space-between; */
-  div {
-    display: flex;
-    margin: 0 auto;
-    transform: translateX(-50%);
-    p {
-      cursor: pointer;
-      margin-right: 0.5ch;
-    }
-  }
-`;
-
-const SelectedOption = styled.p`
-  border-bottom: ${({ selected }) => (selected ? "1px solid" : "none")};
 `;
 
 export async function getStaticProps() {
@@ -61,27 +43,30 @@ const Art = ({ siteConfig, navMenuItems, artItems }) => {
   useEffect(() => {
     setSiteSettings(siteConfig);
     setNavMenuItems(navMenuItems.items);
-  })
+  });
   const pageOptions = ["all -", "images -", "animations"];
 
   const modeClickHandler = (mode) => setMode(mode);
   return (
     <ArtWrapper>
-      <ArtNav>
-        <h1>Art/Design</h1>
-        <div>
-          {pageOptions.map((option, index) => (
-            <SelectedOption
-              selected={mode === option}
-              key={index}
-              onClick={() => modeClickHandler(option)}
-            >
-              {option}
-            </SelectedOption>
-          ))}
+      <PageNav>
+        <img src="android-chrome-192x192.png" />
+        <div className="page-nav">
+          <h1>Art/Design</h1>
+          <ul>
+            {pageOptions.map((option, index) => (
+              <SelectedOption
+                selected={mode === option}
+                key={index}
+                onClick={() => modeClickHandler(option)}
+              >
+                <p>{option}</p>
+              </SelectedOption>
+            ))}
+          </ul>
         </div>
-      </ArtNav>
-      <section>
+      </PageNav>
+      <section className="image-collection">
         {mode !== pageOptions[2] &&
           artItems.images.map((art, index) => (
             <div key={index}>

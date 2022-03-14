@@ -6,8 +6,8 @@ import { getNavigationMenu } from '../../lib/api';
 const transitionDuration = ".4s";
 
 const BurgerContainer = styled.div`
-  top: 2rem;
-  right: 3rem;
+  top: ${({currentPage}) => currentPage === "/" ? "2rem" : "2.5rem" } ;
+  right: 2rem;
   position: fixed;
   color: white;
   cursor: pointer;
@@ -78,11 +78,11 @@ const NavigationItem = styled.li`
   animation-fill-mode: both;
   animation-timing-function: ease-in-out;
     h2 {
-      color: ${({siteSettings}) => siteSettings.colors?.menuTextColor};
+      color: ${({siteSettings}) => siteSettings.colors?.menuTextColor || "white"};
       text-transform: uppercase;
       margin: 0.3rem;
       cursor: pointer;
-      font-size: 1.5rem;
+      font-size: 2.5rem;
       transition: all .2s ease-in-out;
       &:hover {
         transform: scale(1.04)
@@ -110,7 +110,7 @@ const BurgerMenu = ({ navOpen, setNavOpen, closeCheckoutAndNav, currentPage }) =
   const [navMenuItems] = useGlobalState("navMenuItems");
   return (
     <NavContainer open={navOpen} siteSettings={siteSettings}>
-      <BurgerContainer open={navOpen} onClick={() => setNavOpen(!navOpen)} >
+      <BurgerContainer open={navOpen} onClick={() => setNavOpen(!navOpen)} currentPage={currentPage}>
         <Burger open={navOpen}  currentPage={currentPage} siteSettings={siteSettings}/>
       </BurgerContainer>
    

@@ -8,10 +8,11 @@ import { useGlobalState } from "../state";
 import Head from "next/head";
 import styled from "@emotion/styled";
 import { getAspectRatio } from "../utils/helpers";
-
+import { PageNav, SelectedOption } from "../components/pageElements";
 
 const StyledPhotoPage = styled.main`
-  ul {
+
+  .image-collection {
     list-style: none;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -27,25 +28,6 @@ const StyledListItem = styled.li`
     height: 100%;
     width: 100%;
     aspect-ratio: ${({ aspRatio }) => aspRatio};
-  }
-`;
-
-const SelectedOption = styled.p`
-  border-bottom: ${({ selected }) => (selected ? "1px solid" : "none")};
-  cursor: pointer;
-  margin-right: 0.5ch;
-`;
-
-const PhotoNav = styled.div`
-  display: flex;
-  align-items: center;
-  h1 {
-    margin-right: 1rem;
-  }
-  div {
-    display: flex;
-    margin: 0 auto;
-    transform: translateX(-50%);
   }
 `;
 
@@ -71,28 +53,33 @@ export default function Photo({ siteConfig, navMenuItems, photoContent }) {
   useEffect(() => {
     setSiteSettings(siteConfig);
     setNavMenuItems(navMenuItems.items);
-  },  [])
+  }, []);
   const modeClickHandler = (mode) => setMode(mode);
 
   return (
     <StyledPhotoPage>
-      {/* <Head>
+      <Head>
         <title>{photoContent.title}</title>
         <meta name="description" content={photoContent.description} />
-      </Head> */}
-      <PhotoNav>
-        <h1>{photoContent.title}</h1>
-        {pageOptions.map((option, index) => (
-          <SelectedOption
-            selected={mode === option}
-            key={index}
-            onClick={() => modeClickHandler(option)}
-          >
-            {option}
-          </SelectedOption>
-        ))}
-      </PhotoNav>
-      <ul>
+      </Head>
+      <PageNav>
+        <img src="android-chrome-192x192.png" />
+        <div className="page-nav">
+          <h1>{photoContent.title}</h1>
+          <ul>
+            {pageOptions.map((option, index) => (
+              <SelectedOption
+                selected={mode === option}
+                key={index}
+                onClick={() => modeClickHandler(option)}
+              >
+                <p>{option}</p>
+              </SelectedOption>
+            ))}
+          </ul>
+        </div>
+      </PageNav>
+      <ul className="image-collection">
         {mode !== pageOptions[2] &&
           photoContent.weddings.map((photo, index) => (
             <StyledListItem key={index} aspRatio={getAspectRatio(photo.url)}>

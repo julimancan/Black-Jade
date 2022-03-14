@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import { useInterval } from "usehooks-ts";
 import { securePhoto } from "../../utils/helpers";
 import Image from "next/image";
 
@@ -16,12 +15,12 @@ const StyledImage = styled.div`
   position: absolute;
   opacity: ${({ selected }) => (selected ? 1 : 0)};
   transition: opacity 5s;
-  .image {
+  .slide-show-image {
     position: relative;
     width: 100vw;
     height: 100vh;
     background: black;
-    img {
+    .slideshow-img {
       margin-left: auto;
       margin-right: auto;
       object-fit: cover;
@@ -45,24 +44,21 @@ const StyledImage = styled.div`
 
 const HomeSlideShow = ({ photos }) => {
   const [selected, setSelected] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [time, setTime] = useState(0)
   const nextImage = () => {
     setSelected((prev) => (prev === photos.length - 1 ? 0 : prev + 1));
   };
-
+  
   useEffect(() => {
-    setIsPlaying(true);
-  }, []);
-
-  useInterval(
-    () => {
+    setTimeout(() => {
+      setTime(time + 1);
       nextImage();
-    },
-    isPlaying ? 6000 : null
-  );
+    }, 6000);
+  }, [time]);
+
 
   return (
-    <ImageComp arrLength={photos.length}>
+    <ImageComp>
       {photos.map((photo, index) => {
         return (
           <StyledImage
@@ -70,11 +66,12 @@ const HomeSlideShow = ({ photos }) => {
             selected={selected === index}
             onClick={nextImage}
           >
-            <div className="image">
+            <div className="slide-show-image">
               <Image
                 src={securePhoto(photo.url)}
                 alt={`Black Jade Image Background ${index + 1}`}
                 layout="fill"
+                className="slideshow-img"
               />
             </div>
           </StyledImage>
