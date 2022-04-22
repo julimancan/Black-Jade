@@ -26,6 +26,7 @@ const Header = ({ currentPage }) => {
           content={siteSettings.description}
           key="ogdesc"
         />
+        <script async defer data-website-id="7415c05b-8e6e-4d98-a1d0-1937fe96ff4b" src="https://analytics-julimancan.vercel.app/umami.js"></script>
       </Head>
       <BurgerMenu
         currentPage={currentPage}
