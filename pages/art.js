@@ -38,14 +38,14 @@ export async function getStaticProps() {
   };
 }
 const Art = ({ siteConfig, navMenuItems, artItems }) => {
-  const [mode, setMode] = useState("images -");
+  const [mode, setMode] = useState("all");
   const setSiteSettings = useGlobalState("siteSettings")[1];
   const setNavMenuItems = useGlobalState("navMenuItems")[1];
   useEffect(() => {
     setSiteSettings(siteConfig);
     setNavMenuItems(navMenuItems.items);
   });
-  const pageOptions = ["all -", "images -", "animations"];
+  const pageOptions = ["all", "images", "animations"];
 
   console.log(artItems.animations);
 

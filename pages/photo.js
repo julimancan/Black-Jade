@@ -45,7 +45,7 @@ export async function getStaticProps() {
 }
 
 export default function Photo({ siteConfig, navMenuItems, photoContent }) {
-  const pageOptions = ["all -", "weddings -", "portraits"];
+  const pageOptions = ["all", "weddings", "portraits"];
   const [mode, setMode] = useState(pageOptions[0]);
 
   const setSiteSettings = useGlobalState("siteSettings")[1];

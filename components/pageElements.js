@@ -31,5 +31,19 @@ export const PageNav = styled.div`
 export const SelectedOption = styled.li`
   border-bottom: ${({ selected }) => (selected ? "1px solid" : "none")};
   cursor: pointer;
-  margin-right: 0.5ch;
+  margin-right: 3ch;
+  position: relative;
+  &::after {
+    content: "";
+    width: 1ch;
+    height: 2px;
+    background: black;
+    position: absolute;
+    right: -2ch;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  &:last-child:after {
+      display: none;
+  }
 `;
