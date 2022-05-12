@@ -86,7 +86,7 @@ const Art = ({ siteConfig, navMenuItems, artItems }) => {
           ))}
         {mode !== pageOptions[1] &&
           artItems.animations.map((video, index) => (
-            <div className="animation">
+            <div className="animation" key={index}>
               {!video.uploadOrLink ? (
                 <iframe
                   src={`https://www.youtube.com/embed/${getYoutubeId(
