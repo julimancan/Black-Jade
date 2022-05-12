@@ -14,6 +14,7 @@ import Link from "next/link";
 
 const HomeWrapper = styled.main`
   display: flex;
+  transform: translateY(-1.05ch);
   .logo-container {
     position: absolute;
     top: 1rem;

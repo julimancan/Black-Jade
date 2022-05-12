@@ -67,6 +67,8 @@ const LayoutWrapper = styled.div`
         : siteSettings.colors?.menuBarColor};
     justify-content: center;
     margin-top: 1ch;
+    overflow-x: hidden;
+    max-width: 100vw;
     article,
     section {
       width: 100%;
