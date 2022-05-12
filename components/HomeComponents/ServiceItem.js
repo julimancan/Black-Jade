@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { stylingVariables } from "../stylingVariables";
 import Link from "next/link";
 
 
@@ -23,7 +22,6 @@ const ServiceName = styled.h3`
   `
 const ServiceLink = styled(Link)`
   text-decoration: none;
-  /* color: ${stylingVariables.homePageTextColor}; */
   a {
     font-weight: 800;
     font-size: 6.5rem;
