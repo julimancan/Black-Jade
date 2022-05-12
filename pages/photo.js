@@ -13,11 +13,9 @@ import Link from "next/link";
 
 const StyledPhotoPage = styled.main`
   .image-collection {
-    list-style: none;
-    display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    padding: 0 1rem;
+    padding: 0 3.5ch;
+
   }
 `;
 
@@ -64,7 +62,7 @@ export default function Photo({ siteConfig, navMenuItems, photoContent }) {
       </Head>
       <PageNav>
         <Link href="/">
-          <img src="android-chrome-192x192.png" />
+          <img className="logo" src="android-chrome-192x192.png" />
         </Link>
         <div className="page-nav">
           <h1>{photoContent.title}</h1>

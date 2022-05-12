@@ -13,16 +13,20 @@ export const PageNav = styled.div`
   .page-nav {
     display: flex;
     flex-wrap: wrap;
-    max-width: 45%;
+    max-width: 100px;
     align-items: center;
-    @media (min-width: 530px) {
-      max-width: 85%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    @media (min-width: 800px) {
+      margin-left: 2ch;
     }
     ul {
-      /* background-color: red; */
-      /* width: fit-content; */
       display: flex;
-      transform: translateY(5px);
+      position: relative;
+      left: 70%;
+      transform: translateY(5px) translateX(-50%);
       list-style: none;
     }
   }
@@ -31,19 +35,21 @@ export const PageNav = styled.div`
 export const SelectedOption = styled.li`
   border-bottom: ${({ selected }) => (selected ? "1px solid" : "none")};
   cursor: pointer;
-  margin-right: 3ch;
+  margin-right: 2ch;
   position: relative;
+  text-transform: capitalize;
   &::after {
     content: "";
-    width: 1ch;
-    height: 2px;
+    width: 0.5ch;
+    height: 0.1px;
     background: black;
     position: absolute;
-    right: -2ch;
+    right: -1.25ch;
     top: 50%;
     transform: translateY(-50%);
   }
   &:last-child:after {
-      display: none;
+    display: none;
+    margin-right: 0;
   }
 `;

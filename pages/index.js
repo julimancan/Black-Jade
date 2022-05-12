@@ -126,9 +126,10 @@ export default function Home({ siteConfig, content, navMenuItems }) {
   return (
     <HomeWrapper>
       <div className="logo-container">
-        <picture className="logo">
+        <picture>
           <Link href="/">
             <img
+              className="logo"
               src={siteSettings.logo && urlFor(siteSettings.logo).width(200)}
             />
           </Link>

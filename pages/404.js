@@ -10,5 +10,5 @@ export default function Custom404() {
     async () => await getSiteSettings().then(data => setSiteSettings(data));
     async () => await getNavigationMenu().then(data => setNavMenuItems(data));
   });
-  return <h1>404 - Page Not Found</h1>;
+  return <main><h1>404 - Page Not Found</h1></main>;
 }

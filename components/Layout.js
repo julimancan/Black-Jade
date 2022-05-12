@@ -66,13 +66,24 @@ const LayoutWrapper = styled.div`
         ? siteSettings.colors?.homepageTextcolor
         : siteSettings.colors?.menuBarColor};
     justify-content: center;
-
+    margin-top: 1ch;
     article,
     section {
       width: 100%;
       @media (min-width: 800px) {
       }
     }
+  }
+  .logo {
+    margin: .5ch 3ch;
+  }
+  .image-collection {
+    margin: 3ch 0;
+    display: grid;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    list-style: none
   }
 `;
 

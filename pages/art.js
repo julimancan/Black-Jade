@@ -11,17 +11,17 @@ const ArtWrapper = styled.main`
   padding: 0 0.5rem;
 
   .image-collection {
-    margin: 1rem 0;
-    display: grid;
+ 
     grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 1rem;
     /* background-color: red; */
-    justify-content: center;
-    align-items: center;
+    padding: 0;
     div,
     iframe {
       margin: 0 auto;
     }
+  }
+  .page-nav {
+
   }
 `;
 
@@ -45,7 +45,7 @@ const Art = ({ siteConfig, navMenuItems, artItems }) => {
     setSiteSettings(siteConfig);
     setNavMenuItems(navMenuItems.items);
   });
-  const pageOptions = ["all", "images", "videos/animations"];
+  const pageOptions = ["all", "art", "videos/animations"];
 
   console.log(artItems.animations);
 
@@ -54,10 +54,10 @@ const Art = ({ siteConfig, navMenuItems, artItems }) => {
     <ArtWrapper>
       <PageNav>
         <Link href="/">
-          <img src="android-chrome-192x192.png" />
+          <img className="logo" src="android-chrome-192x192.png" />
         </Link>
         <div className="page-nav">
-          <h1>Art/Design</h1>
+          <h1>Art / Media</h1>
           <ul>
             {pageOptions.map((option, index) => (
               <SelectedOption
