@@ -8,7 +8,7 @@ import { useGlobalState } from "../state";
 import { getYoutubeId } from "../utils/helpers";
 
 const ArtWrapper = styled.main`
-  padding: 0 .5rem;
+  padding: 0 0.5rem;
 
   .image-collection {
     margin: 1rem 0;
@@ -47,6 +47,8 @@ const Art = ({ siteConfig, navMenuItems, artItems }) => {
   });
   const pageOptions = ["all -", "images -", "animations"];
 
+  console.log(artItems.animations);
+
   const modeClickHandler = (mode) => setMode(mode);
   return (
     <ArtWrapper>
@@ -73,24 +75,39 @@ const Art = ({ siteConfig, navMenuItems, artItems }) => {
         {mode !== pageOptions[2] &&
           artItems.images.map((art, index) => (
             <div key={index}>
-              <Image src={art.url} alt={art.alt} width="350px" height="350px" />
+              <Image
+                src={art.url}
+                alt={art.alt}
+                width="350px"
+                height="350px"
+                objectFit="cover"
+              />
             </div>
           ))}
         {mode !== pageOptions[1] &&
           artItems.animations.map((video, index) => (
-            <iframe
-              src={`https://www.youtube.com/embed/${getYoutubeId(
-                video.url
-              )}?controls=0&autoplay=1&loop=1&rel=0&showinfo=0&mute=1&autohide=1`}
-              key={index}
-              width="350px"
-              height="350px"
-              loop
-              muted
-              frameBorder="0"
-              title="video"
-              alt={video.alt}
-            />
+            <div className="animation">
+              {!video.uploadOrLink ? (
+                <iframe
+                  src={`https://www.youtube.com/embed/${getYoutubeId(
+                    video.url
+                  )}?controls=0&autoplay=1&loop=1&rel=0&showinfo=0&mute=1&autohide=1`}
+                  key={index}
+                  width="350px"
+                  height="350px"
+                  loop
+                  muted
+                  frameBorder="0"
+                  title="video"
+                  alt={video.alt}
+                />
+              ) : (
+                <video controls="true" width="350px" height="350px">
+                  <source src={video.upload} type="video/mp4" />
+                </video>
+              )}
+              <h3>{video.alt}</h3>
+            </div>
           ))}
       </section>
     </ArtWrapper>
