@@ -11,7 +11,6 @@ const ArtWrapper = styled.main`
   padding: 0 0.5rem;
 
   .image-collection {
- 
     grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
     /* background-color: red; */
     padding: 0;
@@ -21,7 +20,6 @@ const ArtWrapper = styled.main`
     }
   }
   .page-nav {
-
   }
 `;
 
@@ -38,6 +36,7 @@ export async function getStaticProps() {
   };
 }
 const Art = ({ siteConfig, navMenuItems, artItems }) => {
+
   const [mode, setMode] = useState("all");
   const setSiteSettings = useGlobalState("siteSettings")[1];
   const setNavMenuItems = useGlobalState("navMenuItems")[1];
@@ -46,8 +45,6 @@ const Art = ({ siteConfig, navMenuItems, artItems }) => {
     setNavMenuItems(navMenuItems.items);
   });
   const pageOptions = ["all", "art", "videos/animations"];
-
-  console.log(artItems.animations);
 
   const modeClickHandler = (mode) => setMode(mode);
   return (
@@ -87,7 +84,11 @@ const Art = ({ siteConfig, navMenuItems, artItems }) => {
         {mode !== pageOptions[1] &&
           artItems.animations.map((video, index) => (
             <div className="animation" key={index}>
-              {!video.uploadOrLink ? (
+              {video.uploadOrLink ? (
+                <video controls="true" width="350px" height="500px">
+                  <source src={video.upload} type="video/mp4" />
+                </video>
+              ) : (
                 <iframe
                   src={`https://www.youtube.com/embed/${getYoutubeId(
                     video.url
@@ -101,10 +102,6 @@ const Art = ({ siteConfig, navMenuItems, artItems }) => {
                   title="video"
                   alt={video.alt}
                 />
-              ) : (
-                <video controls="true" width="350px" height="350px">
-                  <source src={video.upload} type="video/mp4" />
-                </video>
               )}
             </div>
           ))}
