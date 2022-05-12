@@ -45,7 +45,7 @@ const Art = ({ siteConfig, navMenuItems, artItems }) => {
     setSiteSettings(siteConfig);
     setNavMenuItems(navMenuItems.items);
   });
-  const pageOptions = ["all", "images", "animations"];
+  const pageOptions = ["all", "images", "videos/animations"];
 
   console.log(artItems.animations);
 
