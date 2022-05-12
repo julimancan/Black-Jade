@@ -106,7 +106,6 @@ const Art = ({ siteConfig, navMenuItems, artItems }) => {
                   <source src={video.upload} type="video/mp4" />
                 </video>
               )}
-              <h3>{video.alt}</h3>
             </div>
           ))}
       </section>
