@@ -50,7 +50,6 @@ const Burger = styled.div`
 
 const NavContainer = styled.nav`
   background:${({siteSettings}) => siteSettings.colors?.menuBgColor};
-  opacity: .95;
   position: fixed;
   width: ${({ open }) => open ? "100vw" : 0};
   height: 100vh;
