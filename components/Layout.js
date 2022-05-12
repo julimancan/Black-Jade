@@ -5,6 +5,8 @@ import Footer from "./Footer";
 import Header from "./HeaderComponents/Header";
 
 const LayoutWrapper = styled.div`
+  height: 100vh;
+  overflow: ${({ currentPage }) => currentPage === "/" && "hidden"};
   @font-face {
     font-family: ${({ siteSettings }) => siteSettings.fonts?.h1?.title};
     src: ${({ siteSettings }) =>
@@ -77,7 +79,7 @@ const LayoutWrapper = styled.div`
     }
   }
   .logo {
-    margin: .5ch 3ch;
+    margin: 0.5ch 3ch;
   }
   .image-collection {
     margin: 3ch 0;
@@ -85,7 +87,7 @@ const LayoutWrapper = styled.div`
     gap: 1rem;
     justify-content: center;
     align-items: center;
-    list-style: none
+    list-style: none;
   }
 `;
 
