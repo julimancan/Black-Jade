@@ -3,12 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { PageNav, SelectedOption } from "../components/pageElements";
+import PageSeo from "../components/pageSeo";
 import { getArtContent, getNavigationMenu, getSiteSettings } from "../lib/api";
 import { useGlobalState } from "../state";
 import { getYoutubeId } from "../utils/helpers";
 
 const ArtWrapper = styled.main`
   padding: 0 0px;
+  overflow-x: unset ;
   .image-collection {
     /* background-color: violet; */
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -50,6 +52,10 @@ const Art = ({ siteConfig, navMenuItems, artItems }) => {
   const modeClickHandler = (mode) => setMode(mode);
   return (
     <ArtWrapper>
+       <PageSeo
+        title={artItems.title}
+        description={artItems.description}
+      />
       <PageNav>
      
         <div className="page-nav">
