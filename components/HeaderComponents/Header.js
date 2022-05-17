@@ -45,11 +45,13 @@ const Header = ({ currentPage }) => {
         </picture> */}
         {siteSettings.logo && (
           <Link href="/" passHref>
-            <SanityPicture
-              image={siteSettings.logo}
-              alt="Black Jade Collective"
-              classNames="logo"
-            />
+            <a>
+              <SanityPicture
+                image={siteSettings.logo}
+                alt="Black Jade Collective"
+                classNames="logo"
+              />
+            </a>
           </Link>
         )}
       </div>
