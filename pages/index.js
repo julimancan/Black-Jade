@@ -14,7 +14,7 @@ import getConfig from "next/config";
 const HomeWrapper = styled.main`
   display: flex;
   transform: translateY(-6.5ch);
-  li:first-of-type {
+  li {
     &::after {
       content: "";
       position: absolute;
@@ -32,6 +32,11 @@ const HomeWrapper = styled.main`
       }
     }
   }
+  li:last-of-type {
+    &::after {
+      display: none;
+    }
+  } 
 `;
 const ServiceList = styled.ul`
   position: relative;
