@@ -11,7 +11,6 @@ import {
 import { useGlobalState } from "../state";
 
 const StyledVideoPage = styled.main`
-  background-color: red;
   /* margin-top: 8rem; */
   padding: 2rem 30px;
   text-align: center;

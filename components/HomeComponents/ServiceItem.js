@@ -29,7 +29,6 @@ const ServiceLink = styled(Link)`
     text-transform: uppercase;
     color: white;
   }
-  background: red;
 `;
 
 const ServiceItem = ({ serviceId, url, name }) => {
