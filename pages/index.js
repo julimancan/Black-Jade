@@ -13,7 +13,7 @@ import getConfig from "next/config";
 
 const HomeWrapper = styled.main`
   display: flex;
-  transform: translateY(-1.05ch);
+  transform: translateY(-5.6ch);
   li:first-of-type {
     &::after {
       content: "";
