@@ -7,7 +7,7 @@ module.exports = {
     SANITY_PROJECT_ID: process.env.SANITY_PROJECT_ID
   },
   images: {
-    domains: ['res.cloudinary.com', "cdn.sanity.io"],
+    domains: ['res.cloudinary.com', "cdn.sanity.io", "img.youtube.com"],
   },
   compiler: {
     styledComponents: true
