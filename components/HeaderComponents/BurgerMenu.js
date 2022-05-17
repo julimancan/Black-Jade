@@ -6,8 +6,8 @@ import { getNavigationMenu } from '../../lib/api';
 const transitionDuration = ".4s";
 
 const BurgerContainer = styled.div`
-  top: 2rem;
-  right: 4.5ch;
+  top: 2.5rem;
+  right: 2ch;
   position: fixed;
   color: white;
   cursor: pointer;
@@ -16,16 +16,20 @@ const BurgerContainer = styled.div`
   height: 2rem;
   display: flex;
   align-items: center;
+  @media (min-width: 700px) {
+    right: 4rem;
+    
+  }
 `;
 
 const Burger = styled.div`
   display: block;
-  width: 40px;
-  height: 3px;
   background: ${({ open, currentPage, siteSettings }) => open ? "none" : currentPage === "/" ? siteSettings.colors?.menuBarColor : siteSettings.colors?.menuBgColor};
-  border-radius: 5px;
   align-self: center;
   transition: width ${transitionDuration}, background ${transitionDuration};  
+  width: 40px;
+  height: 3px;
+  border-radius: 5px;
   &:before, &:after {
     content: "";
     border-radius: 5px;
@@ -46,7 +50,7 @@ const Burger = styled.div`
   @media (min-width: 1068px) {
     /* display: none; */
   }
-`;
+  `;
 
 const NavContainer = styled.nav`
   background:${({siteSettings}) => siteSettings.colors?.menuBgColor};

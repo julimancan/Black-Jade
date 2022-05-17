@@ -5,7 +5,7 @@ const YoutubePicture = ({ youtubeId, alt, classNames }) => {
 
   // define the version of image to be used options are hqdefault, mqdefault, sddefault, maxresdefault or 0 for default all .jpg
 
-  const mobileUrl = `${mainUrl}maxresdefault.jpg`
+  const mobileUrl = `${mainUrl}mqdefault.jpg`
   const tabletUrl = `${mainUrl}maxresdefault.jpg`
   const desktopUrl = `${mainUrl}0.jpg`
 

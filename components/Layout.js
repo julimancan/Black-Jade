@@ -68,7 +68,7 @@ const LayoutWrapper = styled.div`
         ? siteSettings.colors?.homepageTextcolor
         : siteSettings.colors?.menuBarColor};
     justify-content: center;
-    margin-top: 3rem;
+    margin-top: 3.5rem;
     overflow-x: hidden;
     max-width: 100vw;
     article,
@@ -83,10 +83,20 @@ const LayoutWrapper = styled.div`
     position: absolute;
     z-index: 99;
     top: 1rem;
-    left: 1rem;
+    
+    /* left: rem; */
+    @media (min-width: 700px) {
+      left: 1rem;
+      
+    }
     img {
       cursor: pointer;
-      width: 6rem;
+      width: 4.5rem;
+      
+      @media (min-width: 700px) {
+        width: 6rem;
+      }
+
     }
   }
   .image-collection {
