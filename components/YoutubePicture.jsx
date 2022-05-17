@@ -1,7 +1,7 @@
 
 const YoutubePicture = ({ youtubeId, alt, classNames }) => {
 
-  const mainUrl = `http://img.youtube.com/vi/${youtubeId}/`
+  const mainUrl = `https://img.youtube.com/vi/${youtubeId}/`
 
   // define the version of image to be used options are hqdefault, mqdefault, sddefault, maxresdefault or 0 for default all .jpg
 
