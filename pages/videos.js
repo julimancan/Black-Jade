@@ -12,7 +12,20 @@ import { useGlobalState } from "../state";
 
 const StyledVideoPage = styled.main`
   background-color: red;
-  margin-top: 2rem;
+  /* margin-top: 8rem; */
+  padding: 2rem 30px;
+  text-align: center;
+  h1 {
+    /* transform: translateY(-1ch); */
+    position: absolute;
+    /* margin-top: -1rem; */
+    left: 50%;
+    transform: translateX(-50%) translateY(-3rem);
+  }
+  article {
+    margin-top: 3rem;
+  }
+
 `;
 
 export const getStaticProps = async () => {
@@ -37,15 +50,12 @@ const Videos = ({ pageContent, siteConfig, navMenuItems }) => {
   });
   return (
     <StyledVideoPage>
-      {/* <Link href="/">
-        <img className="logo" src="android-chrome-192x192.png" />
-      </Link> */}
       <PageSeo
         title={pageContent.seo.title}
         description={pageContent.seo.description}
-        url={"/"}
       />
       <h1>Videos</h1>
+      
       <article>
         <VideoGrid videos={pageContent.videos} />
       </article>

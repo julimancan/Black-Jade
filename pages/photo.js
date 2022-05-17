@@ -5,17 +5,16 @@ import {
   getSiteSettings,
 } from "../lib/api";
 import { useGlobalState } from "../state";
-import Head from "next/head";
 import styled from "@emotion/styled";
 import { getAspectRatio } from "../utils/helpers";
 import { PageNav, SelectedOption } from "../components/pageElements";
-import Link from "next/link";
+import PageSeo from "../components/pageSeo";
 
 const StyledPhotoPage = styled.main`
   .image-collection {
     grid-template-columns: 1fr 1fr;
-    padding: 0 3.5ch;
-
+    /* padding: 0 3.5ch; */
+    padding: 0 30px;
   }
 `;
 
@@ -56,10 +55,10 @@ export default function Photo({ siteConfig, navMenuItems, photoContent }) {
 
   return (
     <StyledPhotoPage>
-      <Head>
-        <title>{photoContent.title}</title>
-        <meta name="description" content={photoContent.description} />
-      </Head>
+      <PageSeo
+        title={photoContent.title}
+        description={photoContent.description}
+      />
       <PageNav>
         {/* <Link href="/">
           <img className="logo" src="android-chrome-192x192.png" />

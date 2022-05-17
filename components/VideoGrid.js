@@ -98,7 +98,7 @@ const VideoModal = styled.div`
         width: 80%;
       }
     }
-    @media (min-width: 1000px) {
+    @media (min-width: 1200px) {
       flex-direction: row;
 
       .container-for-container {
@@ -127,7 +127,7 @@ const VideoModal = styled.div`
       width: 30px;
       height: 5px;
       background: white;
-      transform: rotate(90deg);
+      transform: rotate(90deg) translateY(15px);
     }
   }
 `;

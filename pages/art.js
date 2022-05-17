@@ -8,12 +8,13 @@ import { useGlobalState } from "../state";
 import { getYoutubeId } from "../utils/helpers";
 
 const ArtWrapper = styled.main`
-  padding: 0 0.5rem;
-
+  padding: 0 0px;
   .image-collection {
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    /* background-color: violet; */
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     /* background-color: red; */
     padding: 0;
+    gap: 1%;
     div,
     iframe {
       margin: 0 auto;
