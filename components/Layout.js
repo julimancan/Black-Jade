@@ -80,6 +80,14 @@ const LayoutWrapper = styled.div`
   }
   .logo {
     margin: 0.5ch 3ch;
+    position: absolute;
+    z-index: 1000;
+    top: 1rem;
+    left: 1rem;
+    img {
+      cursor: pointer;
+      width: 6rem;
+    }
   }
   .image-collection {
     margin: 3ch 0;

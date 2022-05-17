@@ -10,23 +10,10 @@ import {
 } from "../lib/api";
 import { useGlobalState } from "../state";
 import getConfig from "next/config";
-import Link from "next/link";
 
 const HomeWrapper = styled.main`
   display: flex;
   transform: translateY(-1.05ch);
-  .logo-container {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    z-index: 50;
-    .logo {
-      position: relative;
-      img {
-        width: 6rem;
-      }
-    }
-  }
   li:first-of-type {
     &::after {
       content: "";
@@ -126,16 +113,7 @@ export default function Home({ siteConfig, content, navMenuItems }) {
 
   return (
     <HomeWrapper>
-      <div className="logo-container">
-        <picture>
-          <Link href="/">
-            <img
-              className="logo"
-              src={siteSettings.logo && urlFor(siteSettings.logo).width(200)}
-            />
-          </Link>
-        </picture>
-      </div>
+
       <ServiceList>
         {content.links.map((link, index) => (
           <ServiceItem

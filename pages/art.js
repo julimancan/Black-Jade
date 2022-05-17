@@ -50,9 +50,7 @@ const Art = ({ siteConfig, navMenuItems, artItems }) => {
   return (
     <ArtWrapper>
       <PageNav>
-        <Link href="/">
-          <img className="logo" src="android-chrome-192x192.png" />
-        </Link>
+     
         <div className="page-nav">
           <h1>Art / Media</h1>
           <ul>

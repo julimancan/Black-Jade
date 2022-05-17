@@ -2,6 +2,10 @@ import Head from "next/head";
 import { useState } from "react";
 import BurgerMenu from "./BurgerMenu";
 import { useGlobalState } from "../../state";
+import SeoHeader from "./SeoHeader";
+import Link from "next/link";
+import { urlFor } from "../../lib/api";
+import SanityPicture from "../SanityPicture";
 
 const Header = ({ currentPage }) => {
   const [navOpen, setNavOpen] = useState(false);
@@ -12,7 +16,7 @@ const Header = ({ currentPage }) => {
   };
   return (
     <>
-      <Head>
+      {/* <Head>
         <title>{siteSettings.title}</title>
         <meta
           name="apple-mobile-web-app-status-bar"
@@ -27,7 +31,34 @@ const Header = ({ currentPage }) => {
           key="ogdesc"
         />
         <script async defer data-website-id="7415c05b-8e6e-4d98-a1d0-1937fe96ff4b" src="https://analytics-julimancan.vercel.app/umami.js"></script>
-      </Head>
+      </Head> */}
+
+      <div className="logo-container">
+        {/* <picture>
+          
+          <Link href="/">
+            <img
+              className="logo"
+              src={siteSettings.logo && urlFor(siteSettings.logo).width(200)}
+            />
+          </Link>
+        </picture> */}
+        {siteSettings.logo && (
+          <Link href="/" passHref>
+            <SanityPicture
+              image={siteSettings.logo}
+              alt="Black Jade Collective"
+              classNames="logo"
+            />
+          </Link>
+        )}
+      </div>
+      <SeoHeader
+        title={siteSettings.title}
+        description={siteSettings.description}
+        pageBgColor={siteSettings.colors?.pageBgColor}
+        url={"blackjadecollective.com"}
+      />
       <BurgerMenu
         currentPage={currentPage}
         navOpen={navOpen}
