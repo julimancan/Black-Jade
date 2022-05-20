@@ -18,7 +18,8 @@ const VideoPageContainer = styled.section`
       /* align-items: center; */
       /* background: red; */
       h3 {
-        font-size: 1rem;
+        font-size: 1.5rem;
+        margin-top: 1rem;
       }
       .image-wrapper {
         width: 100%;
@@ -90,6 +91,8 @@ const VideoModal = styled.div`
       width: 100%;
       h4,
       p {
+        margin-top: 1rem;
+        font-size: 1.5rem;
         color: white;
       }
     }

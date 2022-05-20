@@ -60,9 +60,7 @@ export default function Photo({ siteConfig, navMenuItems, photoContent }) {
         description={photoContent.description}
       />
       <PageNav>
-        {/* <Link href="/">
-          <img className="logo" src="android-chrome-192x192.png" />
-        </Link> */}
+    
         <div className="page-nav">
           <h1>{photoContent.title}</h1>
           <ul>
