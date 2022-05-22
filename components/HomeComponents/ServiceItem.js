@@ -14,7 +14,7 @@ const ServiceName = styled.h3`
   cursor: pointer;
   letter-spacing: 2px;
   &:hover {
-    transform: scale(1.08);
+    transform: scale(1.06);
   }
   @media (min-width: 768px) {
     /* font-size: 3rem; */

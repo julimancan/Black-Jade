@@ -11,24 +11,37 @@ const VideoPageContainer = styled.section`
     padding: 0;
     /* background-color: violet; */
     li {
-      width: 100%;
+      /* width: 100%; */
       display: flex;
       flex-direction: column;
       margin-bottom: 2rem;
       /* align-items: center; */
       /* background: red; */
+      width: 85vw;
+      @media (min-width: 600px) {
+        
+        width: 100%;
+      }
       h3 {
         font-size: 1.5rem;
         margin-top: 1rem;
       }
       .image-wrapper {
         width: 100%;
+        
         overflow: hidden;
         /* 16:9 aspect ratio */
-        padding-top: 56.25%;
+        /* padding-top: 56.25%; */
+        /* height: 300px; */
+        aspect-ratio: 16/9;
         position: relative;
+        @media (min-width: 600px) {
+          
+          width: 100%;
+        }
         img {
           object-fit: cover;
+          object-position: center;
           border: 0;
           height: 100%;
           left: 0;
@@ -40,7 +53,8 @@ const VideoPageContainer = styled.section`
     }
 
     @media (max-width: 1200px) {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, 50%);
+      padding-right: 30px;
     }
     @media (max-width: 700px) {
       grid-template-columns: 1fr;
@@ -71,6 +85,7 @@ const VideoModal = styled.div`
     width: 100%;
     .container-for-container {
       width: 100%;
+      max-width: 900px;
 
       .video-container {
         position: relative;
@@ -92,8 +107,9 @@ const VideoModal = styled.div`
       h4,
       p {
         margin-top: 1rem;
-        font-size: 1.5rem;
+        font-size: 1;
         color: white;
+        margin-top: 1rem;
       }
     }
     @media (min-width: 700px) {
@@ -102,7 +118,7 @@ const VideoModal = styled.div`
       }
     }
     @media (min-width: 1200px) {
-      flex-direction: row;
+      /* flex-direction: row; */
 
       .container-for-container {
         padding: 2rem;

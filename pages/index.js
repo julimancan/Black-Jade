@@ -20,7 +20,7 @@ const HomeWrapper = styled.main`
       position: absolute;
       color: white;
       top: 50%;
-      right: -1.3rem;
+      right: -1.7rem;
       height: 10px;
       display: none;
       width: 10px;
@@ -44,7 +44,7 @@ const ServiceList = styled.ul`
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 3rem;
 
   @media (min-width: 700px) {
     flex-direction: row;
