@@ -19,7 +19,7 @@ const StyledFooter = styled.footer`
 function Footer({ siteSettings, currentPage }) {
   return (
     <StyledFooter currentPage={currentPage} siteSettings={siteSettings}>
-      <Link href={`mailto:${siteSettings.email}`}>{siteSettings.email}</Link>
+      <Link href={`mailto:${siteSettings.email}`}>contact us</Link>
     </StyledFooter>
   );
 }
