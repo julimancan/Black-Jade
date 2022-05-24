@@ -51,24 +51,23 @@ const photoTest = ({
   console.log(images);
   const handleOnFolderClick = (e) => {
     const folderPath = e.target.dataset.folderPath;
-    setActiveFolder(folderPath)
+    setActiveFolder(folderPath);
     setNextCursor(undefined);
     setImages([]);
     // setTotalCount(0);
-  }
+  };
 
   useEffect(() => {
     (async function run() {
       const results = await fetch(`api/cloudImages`, {
         method: "POST",
         body: JSON.stringify({
-          expression: `folder="${activeFolder || ''}"`
+          expression: `folder="${activeFolder || ""}"`,
         }),
       }).then((res) => res.json());
       console.log({ results });
       const newImages = mapImageResources(results.resources);
       setImages(newImages);
-
     })();
   }, [activeFolder]);
   const handleLoadMore = async (e) => {
@@ -85,7 +84,7 @@ const photoTest = ({
     setNextCursor(nextPageCursor);
 
     setImages([...images, ...newImages]);
-  }
+  };
   return (
     <StyledPhotoTest>
       Enter
@@ -101,7 +100,7 @@ const photoTest = ({
       </ul>
       <ul className="image-grid">
         {images.map((image) => (
-          <li key={`asset-id-${image.id}`} >
+          <li key={`asset-id-${image.id}`}>
             <img src={image.imageUrl} alt={image.title} />
             <h2>{image.title}</h2>
           </li>
