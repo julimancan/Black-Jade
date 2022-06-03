@@ -52,6 +52,7 @@ const photoTest = ({
   const handleOnFolderClick = (e) => {
     const folderPath = e.target.dataset.folderPath;
     setActiveFolder(folderPath);
+    console.log(folderPath);
     setNextCursor(undefined);
     setImages([]);
     // setTotalCount(0);
@@ -59,11 +60,11 @@ const photoTest = ({
 
   useEffect(() => {
     (async function run() {
-      const results = await fetch(`api/cloudImages`, {
+      const results = await fetch(`/api/searchCloudinary`, {
         method: "POST",
         body: JSON.stringify({
           expression: `folder="${activeFolder || ""}"`,
-        }),
+        }), 
       }).then((res) => res.json());
       console.log({ results });
       const newImages = mapImageResources(results.resources);
