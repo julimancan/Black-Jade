@@ -12,17 +12,17 @@ const StyledPhotoTest = styled.main`
     display: grid;
     grid-template-columns: repeat(2, minmax(200px, 1fr));
     li {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      /* display: flex; */
+      /* flex-direction: column; */
+      /* justify-content: center; */
+      /* align-items: center; */
     }
   }
-  img {
+  /* img {
     height: 300px;
     width: 300px;
     object-fit: cover;
-  }
+  } */
 `;
 
 export async function getStaticProps(ctx) {
@@ -71,6 +71,8 @@ const photoTest = ({
       setImages(newImages);
     })();
   }, [activeFolder]);
+
+
   const handleLoadMore = async (e) => {
     e.preventDefault();
     const results = await fetch(`api/cloudImages`, {
@@ -86,6 +88,8 @@ const photoTest = ({
 
     setImages([...images, ...newImages]);
   };
+
+  
   return (
     <StyledPhotoTest>
       Enter
