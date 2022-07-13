@@ -5,7 +5,7 @@ export const getYoutubeId = (youtubeLink) => {
 
 export const getAspectRatio = (url) => {
   const [width, length] = url.split("-")[1].split(".")[0].split("x");
-  return Number(width) / Number(length);;
+  return Number(width) / Number(length);
 };
 
 export const securePhoto = url => `https${url.split("http")[1]}`;

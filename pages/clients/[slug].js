@@ -13,9 +13,6 @@ import { BsDownload } from "react-icons/bs";
 import { addFlAttachmentToCloudinaryImageUrl } from "../../utils/helpers";
 
 const StyledClientPage = styled.main`
-  * {
-    /* border: 1px solid blue; */
-  }
   margin-top: 0 !important;
   overflow-x: unset;
 
@@ -56,10 +53,7 @@ const StyledClientPage = styled.main`
   }
   .image-collection {
     /* /* grid-template-columns: 1fr 1fr; */
-    padding: 0 30px; 
-
-
-
+    padding: 0 30px;
 
     /* margin-top: 1rem !important;
     grid-template-columns: 1fr;
@@ -71,33 +65,39 @@ const StyledClientPage = styled.main`
       grid-template-rows: repeat(auto-fit, 1000px);
     } */
 
-
     display: block;
-    columns: 5 minmax(200px, 400px);
+
+    /* columns: 2 minmax(200px, 400px);
+    @media (min-width: 700px) {
+      columns: 3 minmax(200px, 400px);
+    }
+    @media (min-width: 1200px) {
+    } */
+    /* columns: 5 minmax(200px, 400px); */
 
     /* grid-template-rows: repeat(auto-fit, minmax(calc(4*160px), 1fr)); */
-    grid-auto-flow: dense;
+    /* grid-auto-flow: dense; */
     /* grid-auto-rows: minmax(min(500px, 100%), 1fr); */
     /* grid-gap: 2px; */
     /* grid-auto-rows: min-max(80px, auto); */
     /* grid-auto-flow: dense; */
     padding: 0 10px;
 
-
-
     margin-top: 1rem !important;
-    grid-template-columns: repeat(auto-fit, 1fr);
+    /* grid-template-columns: repeat(auto-fit, 1fr); */
+    /* grid-template-columns: repeat(4, 1fr); */
+
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid-template-columns: repeat(4, 1fr);
-
-
     grid-auto-flow: dense;
     grid-auto-rows: minmax(min(100px, 100%), 1fr);
     li {
       position: relative;
+      /* height: 100%; */
       span {
         width: 100% !important;
         height: 100% !important;
+        /* width: fit-content !important; */
+        /* height: fit-content !important; */
       }
       svg {
         position: absolute;
@@ -142,6 +142,19 @@ export const getStaticProps = async ({ params }) => {
     }
   ).then((res) => res.json());
 
+  const cloudinary = require("cloudinary").v2;
+
+  cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY, // add your api_key
+    api_secret: process.env.CLOUD_API_SECRET, // add your api_secret
+    secure: true,
+  });
+  const zipDownloadUrl = await cloudinary.utils.download_folder(
+    `Clients/${slug}`,
+    { flatten_folders: true, target_public_id: slug },
+    (error, result) => result
+  );
   const { resources, next_cursor: nextCursor } = clientImages;
   const newImages = mapImageResources(resources);
 
@@ -157,6 +170,7 @@ export const getStaticProps = async ({ params }) => {
       nextCursor,
       siteConfig,
       navMenuItems,
+      zipDownloadUrl,
     },
   };
 };
@@ -167,14 +181,8 @@ const Client = ({
   nextCursor: defaultNextCursor,
   siteConfig,
   navMenuItems,
+  zipDownloadUrl,
 }) => {
-  console.log({
-    defaultImages,
-    clientInfo,
-    defaultNextCursor,
-    siteConfig,
-    navMenuItems,
-  });
   const [nextCursor, setNextCursor] = useState(defaultNextCursor);
   const [images, setImages] = useState(defaultImages);
   const gridRef = useRef();
@@ -221,6 +229,11 @@ const Client = ({
           <button onClick={scrollToGallery}>View Gallery</button>
         </section>
       </header>
+      {clientInfo.downloadable && (
+        <a href={zipDownloadUrl} download="file-name">
+          <button>Download All</button>
+        </a>
+      )}
       <ul className="image-collection" ref={gridRef}>
         {images.map((image, i) => {
           return (
@@ -233,7 +246,11 @@ const Client = ({
                 width={image.width}
               />
               {clientInfo.downloadable && (
-                <a href={addFlAttachmentToCloudinaryImageUrl(image.imageUrl)} download target="_blank">
+                <a
+                  href={addFlAttachmentToCloudinaryImageUrl(image.imageUrl)}
+                  download
+                  target="_blank"
+                >
                   <BsDownload />
                 </a>
               )}
