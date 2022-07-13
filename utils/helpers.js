@@ -9,3 +9,9 @@ export const getAspectRatio = (url) => {
 };
 
 export const securePhoto = url => `https${url.split("http")[1]}`;
+
+
+export const addFlAttachmentToCloudinaryImageUrl = (imageUrl) => {
+  const [cloudAddress, imageAddress] = imageUrl.split("/upload")
+  return `${cloudAddress}/upload/fl_attachment${imageAddress}`; 
+}

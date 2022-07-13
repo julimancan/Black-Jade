@@ -9,6 +9,8 @@ import styled from "@emotion/styled";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useGlobalState } from "../../state";
+import { BsDownload } from "react-icons/bs";
+import { addFlAttachmentToCloudinaryImageUrl } from "../../utils/helpers";
 
 const StyledClientPage = styled.main`
   * {
@@ -16,7 +18,6 @@ const StyledClientPage = styled.main`
   }
   margin-top: 0 !important;
   overflow-x: unset;
-
 
   header {
     display: flex;
@@ -54,33 +55,67 @@ const StyledClientPage = styled.main`
     }
   }
   .image-collection {
-    /* grid-template-columns: 1fr 1fr;
-    padding: 0 30px; */
-    margin-top: 1rem !important;
-    grid-template-columns: repeat(auto-fit, 1fr);
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    /* /* grid-template-columns: 1fr 1fr; */
+    padding: 0 30px; 
 
+
+
+
+    /* margin-top: 1rem !important;
+    grid-template-columns: 1fr;
+    @media (min-width: 700px) {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+    @media (min-width: 950px) {
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      grid-template-rows: repeat(auto-fit, 1000px);
+    } */
+
+
+    display: block;
+    columns: 5 minmax(200px, 400px);
+
+    /* grid-template-rows: repeat(auto-fit, minmax(calc(4*160px), 1fr)); */
     grid-auto-flow: dense;
-    grid-auto-rows: minmax(min(400px, 100%), 1fr);
+    /* grid-auto-rows: minmax(min(500px, 100%), 1fr); */
     /* grid-gap: 2px; */
     /* grid-auto-rows: min-max(80px, auto); */
     /* grid-auto-flow: dense; */
+    padding: 0 10px;
+
+
+
+    margin-top: 1rem !important;
+    grid-template-columns: repeat(auto-fit, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
+
+
+    grid-auto-flow: dense;
+    grid-auto-rows: minmax(min(100px, 100%), 1fr);
     li {
       position: relative;
-      height: 100%;
-      width: 100%;
-      /* background-color: red; */
-      display: flex;
-      justify-content: center;
+      span {
+        width: 100% !important;
+        height: 100% !important;
+      }
+      svg {
+        position: absolute;
+        top: 1%;
+        right: 2%;
+        cursor: pointer;
+      }
     }
   }
 `;
 
 const GridItem = styled.li`
-  grid-row: ${({vertical}) => vertical ? "span 2" : "span 1"};
-  grid-column: ${({vertical}) => vertical ? "span 1" : "span 2"};
+  @media (min-width: 700px) {
+    grid-row: ${({ vertical }) => (vertical ? "span 3" : "span 1")};
+    grid-column: ${({ vertical }) => (vertical ? "span 1" : "span 1")};
 
-  aspect-ratio: ${({vertical}) => vertical ? "9/16" : "16/9"};
+    aspect-ratio: ${({ vertical }) => (vertical ? "9/16" : "16/9")};
+  }
 `;
 
 export const getStaticPaths = async () => {
@@ -197,6 +232,11 @@ const Client = ({
                 height={image.height}
                 width={image.width}
               />
+              {clientInfo.downloadable && (
+                <a href={addFlAttachmentToCloudinaryImageUrl(image.imageUrl)} download target="_blank">
+                  <BsDownload />
+                </a>
+              )}
             </GridItem>
           );
         })}
