@@ -11,6 +11,7 @@ import Image from "next/image";
 import { useGlobalState } from "../../state";
 import { BsDownload } from "react-icons/bs";
 import { addFlAttachmentToCloudinaryImageUrl } from "../../utils/helpers";
+import { useIntersect } from "../../utils/useIntersect";
 
 const StyledClientPage = styled.main`
   margin-top: 0 !important;
@@ -193,8 +194,36 @@ const Client = ({
     setNavMenuItems(navMenuItems.items);
   }, []);
 
-  const handleLoadMore = async (e) => {
-    e.preventDefault();
+  // const createObserver = (element) => {
+  //   let observer;
+
+  //   let options = {
+  //     root: null,
+  //     rootMargin: "0px",
+  //     threshold: buildThresholdList(),
+  //   };
+
+  //   observer = new IntersectionObserver(handleIntersect, options);
+
+  //   observer.observe(element);
+  // };
+  // useEffect(() => {
+  //   const numSteps = 20.0;
+
+  //   let boxElement;
+  //   let prevRatio = 0.0;
+  //   let increasingColor = "rgba(40, 40, 190, ratio)";
+  //   let decreasingColor = "rgba(190, 40, 40, ratio)";
+  // }, []);
+
+  const buildThresholdArray = () =>
+    Array.from(Array(100).keys(), (i) => i / 100);
+
+  const [ref, entry] = useIntersect({
+    threshold: buildThresholdArray(),
+  });
+
+  const handleLoadMore = async () => {
     const results = await fetch(`/api/searchCloudinary`, {
       method: "POST",
       body: JSON.stringify({
@@ -205,6 +234,7 @@ const Client = ({
     const newImages = mapImageResources(resources);
     setImages([...images, ...newImages]);
     setNextCursor(nextPageCursor);
+    setNeedsLoading(true)
   };
 
   const scrollToGallery = () => {
@@ -213,6 +243,17 @@ const Client = ({
       block: "start",
     });
   };
+
+
+  const [needsLoading, setNeedsLoading] = useState(true)
+
+  if (needsLoading) {
+    if (entry.isIntersecting) {
+      console.log("intersecting")
+      handleLoadMore()
+      setNeedsLoading(false)
+    }
+  }
   return (
     <StyledClientPage>
       <header>
@@ -231,7 +272,9 @@ const Client = ({
       </header>
       {clientInfo.downloadable && (
         <a href={zipDownloadUrl} download="file-name">
-          <button>Download All</button>
+          {/* <button> */}
+            Download All
+            {/* </button> */}
         </a>
       )}
       <ul className="image-collection" ref={gridRef}>
@@ -254,11 +297,13 @@ const Client = ({
                   <BsDownload />
                 </a>
               )}
+              {i === images.length - 1 && (
+                <div ref={ref}/>
+              )}
             </GridItem>
           );
         })}
       </ul>
-      <button onClick={handleLoadMore}>Load More</button>
     </StyledClientPage>
   );
 };
