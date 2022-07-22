@@ -249,6 +249,7 @@ const Client = ({
                   href={addFlAttachmentToCloudinaryImageUrl(image.imageUrl)}
                   download
                   target="_blank"
+                  rel="noreferrer"
                 >
                   <BsDownload />
                 </a>
