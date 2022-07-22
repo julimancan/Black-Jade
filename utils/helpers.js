@@ -15,3 +15,5 @@ export const addFlAttachmentToCloudinaryImageUrl = (imageUrl) => {
   const [cloudAddress, imageAddress] = imageUrl.split("/upload")
   return `${cloudAddress}/upload/fl_attachment${imageAddress}`; 
 }
+
+export const buildThresholdArray = () => Array.from(Array(100).keys(), (i) => i / 100);

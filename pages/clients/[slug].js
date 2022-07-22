@@ -10,8 +10,12 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useGlobalState } from "../../state";
 import { BsDownload } from "react-icons/bs";
-import { addFlAttachmentToCloudinaryImageUrl } from "../../utils/helpers";
+import {
+  addFlAttachmentToCloudinaryImageUrl,
+  buildThresholdArray,
+} from "../../utils/helpers";
 import { useIntersect } from "../../utils/useIntersect";
+import Spinner from "../../components/Spinner";
 
 const StyledClientPage = styled.main`
   margin-top: 0 !important;
@@ -53,52 +57,16 @@ const StyledClientPage = styled.main`
     }
   }
   .image-collection {
-    /* /* grid-template-columns: 1fr 1fr; */
-    padding: 0 30px;
-
-    /* margin-top: 1rem !important;
-    grid-template-columns: 1fr;
-    @media (min-width: 700px) {
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    }
-    @media (min-width: 950px) {
-      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-      grid-template-rows: repeat(auto-fit, 1000px);
-    } */
-
-    display: block;
-
-    /* columns: 2 minmax(200px, 400px);
-    @media (min-width: 700px) {
-      columns: 3 minmax(200px, 400px);
-    }
-    @media (min-width: 1200px) {
-    } */
-    /* columns: 5 minmax(200px, 400px); */
-
-    /* grid-template-rows: repeat(auto-fit, minmax(calc(4*160px), 1fr)); */
-    /* grid-auto-flow: dense; */
-    /* grid-auto-rows: minmax(min(500px, 100%), 1fr); */
-    /* grid-gap: 2px; */
-    /* grid-auto-rows: min-max(80px, auto); */
-    /* grid-auto-flow: dense; */
+    display: grid;
     padding: 0 10px;
-
     margin-top: 1rem !important;
-    /* grid-template-columns: repeat(auto-fit, 1fr); */
-    /* grid-template-columns: repeat(4, 1fr); */
-
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-auto-flow: dense;
-    grid-auto-rows: minmax(min(100px, 100%), 1fr);
     li {
       position: relative;
-      /* height: 100%; */
       span {
         width: 100% !important;
         height: 100% !important;
-        /* width: fit-content !important; */
-        /* height: fit-content !important; */
       }
       svg {
         position: absolute;
@@ -147,8 +115,8 @@ export const getStaticProps = async ({ params }) => {
 
   cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
-    api_key: process.env.CLOUD_API_KEY, // add your api_key
-    api_secret: process.env.CLOUD_API_SECRET, // add your api_secret
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET,
     secure: true,
   });
   const zipDownloadUrl = await cloudinary.utils.download_folder(
@@ -157,6 +125,7 @@ export const getStaticProps = async ({ params }) => {
     (error, result) => result
   );
   const { resources, next_cursor: nextCursor } = clientImages;
+  console.log({ resources });
   const newImages = mapImageResources(resources);
 
   const clientInfo = await getClientBySlug(slug);
@@ -168,10 +137,11 @@ export const getStaticProps = async ({ params }) => {
     props: {
       clientImages: newImages,
       clientInfo,
-      nextCursor,
+      nextCursor: nextCursor || "",
       siteConfig,
       navMenuItems,
       zipDownloadUrl,
+      slug,
     },
   };
 };
@@ -182,59 +152,49 @@ const Client = ({
   nextCursor: defaultNextCursor,
   siteConfig,
   navMenuItems,
+  slug,
   zipDownloadUrl,
 }) => {
-  const [nextCursor, setNextCursor] = useState(defaultNextCursor);
+  const [nextCursor, setNextCursor] = useState(defaultNextCursor || "");
+  const [needsLoading, setNeedsLoading] = useState(true);
   const [images, setImages] = useState(defaultImages);
+
   const gridRef = useRef();
   const setSiteSettings = useGlobalState("siteSettings")[1];
   const setNavMenuItems = useGlobalState("navMenuItems")[1];
+
   useEffect(() => {
     setSiteSettings(siteConfig);
     setNavMenuItems(navMenuItems.items);
   }, []);
 
-  // const createObserver = (element) => {
-  //   let observer;
-
-  //   let options = {
-  //     root: null,
-  //     rootMargin: "0px",
-  //     threshold: buildThresholdList(),
-  //   };
-
-  //   observer = new IntersectionObserver(handleIntersect, options);
-
-  //   observer.observe(element);
-  // };
-  // useEffect(() => {
-  //   const numSteps = 20.0;
-
-  //   let boxElement;
-  //   let prevRatio = 0.0;
-  //   let increasingColor = "rgba(40, 40, 190, ratio)";
-  //   let decreasingColor = "rgba(190, 40, 40, ratio)";
-  // }, []);
-
-  const buildThresholdArray = () =>
-    Array.from(Array(100).keys(), (i) => i / 100);
+  // used for loading when user reaches end of the page
 
   const [ref, entry] = useIntersect({
     threshold: buildThresholdArray(),
   });
 
   const handleLoadMore = async () => {
+    if (nextCursor === "") return;
+
     const results = await fetch(`/api/searchCloudinary`, {
       method: "POST",
       body: JSON.stringify({
         nextCursor,
+        expression: `folder="Clients/${slug}"`,
       }),
     }).then((res) => res.json());
+
     const { resources, next_cursor: nextPageCursor } = results;
+
+    if (!nextPageCursor) return;
+
+    setNextCursor(nextPageCursor);
+
     const newImages = mapImageResources(resources);
     setImages([...images, ...newImages]);
-    setNextCursor(nextPageCursor);
-    setNeedsLoading(true)
+
+    setNeedsLoading(true);
   };
 
   const scrollToGallery = () => {
@@ -244,14 +204,10 @@ const Client = ({
     });
   };
 
-
-  const [needsLoading, setNeedsLoading] = useState(true)
-
   if (needsLoading) {
     if (entry.isIntersecting) {
-      console.log("intersecting")
-      handleLoadMore()
-      setNeedsLoading(false)
+      handleLoadMore();
+      setNeedsLoading(false);
     }
   }
   return (
@@ -268,15 +224,15 @@ const Client = ({
           <h1>{clientInfo.heroSection.title}</h1>
           <h2>{clientInfo.heroSection.subtitle}</h2>
           <button onClick={scrollToGallery}>View Gallery</button>
+          {clientInfo.downloadable && (
+            <a href={zipDownloadUrl} download="file-name">
+              <button>
+              Download All
+              </button>
+            </a>
+          )}
         </section>
       </header>
-      {clientInfo.downloadable && (
-        <a href={zipDownloadUrl} download="file-name">
-          {/* <button> */}
-            Download All
-            {/* </button> */}
-        </a>
-      )}
       <ul className="image-collection" ref={gridRef}>
         {images.map((image, i) => {
           return (
@@ -297,9 +253,7 @@ const Client = ({
                   <BsDownload />
                 </a>
               )}
-              {i === images.length - 1 && (
-                <div ref={ref}/>
-              )}
+              {i === images.length - 1 && <div ref={ref} />}
             </GridItem>
           );
         })}
