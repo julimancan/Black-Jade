@@ -101,6 +101,9 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }) => {
   const { slug } = params;
+  const clientImages = await search({
+      expression: `folder="Clients/${slug}"`,
+  })
 
   const cloudinary = require("cloudinary").v2;
 
