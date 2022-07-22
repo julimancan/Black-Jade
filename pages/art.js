@@ -10,7 +10,7 @@ import { getYoutubeId } from "../utils/helpers";
 
 const ArtWrapper = styled.main`
   padding: 0 0px;
-  overflow-x: unset ;
+  overflow-x: unset;
   .image-collection {
     /* background-color: violet; */
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -39,7 +39,6 @@ export async function getStaticProps() {
   };
 }
 const Art = ({ siteConfig, navMenuItems, artItems }) => {
-
   const [mode, setMode] = useState("all");
   const setSiteSettings = useGlobalState("siteSettings")[1];
   const setNavMenuItems = useGlobalState("navMenuItems")[1];
@@ -52,12 +51,8 @@ const Art = ({ siteConfig, navMenuItems, artItems }) => {
   const modeClickHandler = (mode) => setMode(mode);
   return (
     <ArtWrapper>
-       <PageSeo
-        title={artItems.title}
-        description={artItems.description}
-      />
+      <PageSeo title={artItems.title} description={artItems.description} />
       <PageNav>
-     
         <div className="page-nav">
           <h1>Art / Media</h1>
           <ul>
