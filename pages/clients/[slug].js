@@ -41,9 +41,19 @@ const StyledClientPage = styled.main`
       transform: translateY(-50%);
       text-align: center;
       h1 {
-        font-size: 2.5rem;
+        font-size: 1rem;
+        max-width: 25ch;
+        @media (min-width: 450px) {
+          font-size: 1.5rem;
+        }
+        @media (min-width: 600px) {
+          font-size: 2.5rem;
+        }
+        @media (min-width: 900px) {
+          font-size: 3.5rem;
+        }
         color: white;
-        margin: 2rem;
+        margin: 2rem auto;
       }
       button {
         background-color: transparent;
