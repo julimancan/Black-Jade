@@ -15,7 +15,7 @@ import {
   buildThresholdArray,
 } from "../../utils/helpers";
 import { useIntersect } from "../../utils/useIntersect";
-import Spinner from "../../components/Spinner";
+import { search } from "../../lib/cloudinary";
 
 const StyledClientPage = styled.main`
   margin-top: 0 !important;
@@ -101,15 +101,13 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }) => {
   const { slug } = params;
-  const clientImages = await fetch(
-    `${process.env.BASE_URL}/api/searchCloudinary`,
-    {
-      method: "POST",
-      body: JSON.stringify({
-        expression: `folder="Clients/${slug}"`,
-      }),
-    }
-  ).then((res) => res.json());
+
+  const clientImages = await search({
+    method: "POST",
+    body: JSON.stringify({
+      expression: `folder="Clients/${slug}"`,
+    })
+  })
 
   const cloudinary = require("cloudinary").v2;
 
@@ -125,7 +123,7 @@ export const getStaticProps = async ({ params }) => {
     (error, result) => result
   );
   const { resources, next_cursor: nextCursor } = clientImages;
-  console.log({ resources });
+
   const newImages = mapImageResources(resources);
 
   const clientInfo = await getClientBySlug(slug);
@@ -147,13 +145,13 @@ export const getStaticProps = async ({ params }) => {
 };
 
 const Client = ({
-  clientImages: defaultImages,
-  clientInfo,
-  nextCursor: defaultNextCursor,
-  siteConfig,
-  navMenuItems,
-  slug,
-  zipDownloadUrl,
+  clientImages: defaultImages, // = null
+  clientInfo, // = null
+  nextCursor: defaultNextCursor, // = null
+  siteConfig, // = null
+  navMenuItems, // = null
+  slug, // = null
+  zipDownloadUrl, // = null
 }) => {
   const [nextCursor, setNextCursor] = useState(defaultNextCursor || "");
   const [needsLoading, setNeedsLoading] = useState(true);
@@ -226,9 +224,7 @@ const Client = ({
           <button onClick={scrollToGallery}>View Gallery</button>
           {clientInfo.downloadable && (
             <a href={zipDownloadUrl} download="file-name">
-              <button>
-              Download All
-              </button>
+              <button>Download All</button>
             </a>
           )}
         </section>
