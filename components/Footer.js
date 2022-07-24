@@ -14,6 +14,7 @@ const StyledFooter = styled.footer`
   font-size: 1rem;
   margin: 3rem auto;
   text-align: center;
+  padding-bottom: 1rem;
 `;
 
 function Footer({ siteSettings, currentPage }) {
