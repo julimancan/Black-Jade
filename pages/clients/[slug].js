@@ -26,6 +26,7 @@ const StyledClientPage = styled.main`
     width: 100%;
     background-color: black;
     position: relative;
+    height: 100vh;
     span {
       width: 100vw !important;
       aspect-ratio: 16/9;
@@ -41,10 +42,9 @@ const StyledClientPage = styled.main`
       transform: translateY(-50%);
       text-align: center;
       h1 {
-        font-size: 1rem;
+        font-size: 1.5rem;
         max-width: 25ch;
         @media (min-width: 450px) {
-          font-size: 1.5rem;
         }
         @media (min-width: 600px) {
           font-size: 2.5rem;
