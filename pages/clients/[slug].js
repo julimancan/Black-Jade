@@ -7,7 +7,6 @@ import {
 import { mapImageResources } from "../../lib/cloudinary";
 import styled from "@emotion/styled";
 import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
 import { useGlobalState } from "../../state";
 import { BsDownload } from "react-icons/bs";
 import {
@@ -16,6 +15,7 @@ import {
 } from "../../utils/helpers";
 import { useIntersect } from "../../utils/useIntersect";
 import { search } from "../../lib/cloudinary";
+import CloudinaryImage from "../../components/cloudinaryImage";
 
 const StyledClientPage = styled.main`
   margin-top: 0 !important;
@@ -27,13 +27,12 @@ const StyledClientPage = styled.main`
     background-color: black;
     position: relative;
     height: 100vh;
-    span {
+    picture > img {
       width: 100vw !important;
+      height: 100%;
       aspect-ratio: 16/9;
       background: rgba(0, 0, 0, black);
-      img {
-        opacity: 0.8;
-      }
+      opacity: 0.8;
     }
     section {
       position: absolute;
@@ -74,7 +73,7 @@ const StyledClientPage = styled.main`
     grid-auto-flow: dense;
     li {
       position: relative;
-      span {
+      .grid-image > img {
         width: 100% !important;
         height: 100% !important;
       }
@@ -112,8 +111,8 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params }) => {
   const { slug } = params;
   const clientImages = await search({
-      expression: `folder="Clients/${slug}"`,
-  })
+    expression: `folder="Clients/${slug}"`,
+  });
 
   const cloudinary = require("cloudinary").v2;
 
@@ -217,7 +216,7 @@ const Client = ({
   return (
     <StyledClientPage>
       <header>
-        <Image
+        <CloudinaryImage
           src={clientInfo.heroSection.photo.secure_url}
           alt={clientInfo.heroSection.title}
           width={clientInfo.heroSection.photo.width}
@@ -239,12 +238,13 @@ const Client = ({
         {images.map((image, i) => {
           return (
             <GridItem key={image.id} vertical={image.height / image.width > 1}>
-              <Image
+              <CloudinaryImage
                 src={image.imageUrl}
                 objectFit="cover"
                 alt={`${clientInfo.name}-${i}`}
                 height={image.height}
                 width={image.width}
+                classNames="grid-image"
               />
               {clientInfo.downloadable && (
                 <a
