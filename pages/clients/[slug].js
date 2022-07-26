@@ -15,7 +15,7 @@ import {
 } from "../../utils/helpers";
 import { useIntersect } from "../../utils/useIntersect";
 import { search } from "../../lib/cloudinary";
-import CloudinaryImage from "../../components/cloudinaryImage";
+import CloudinaryImage from "../../components/CloudinaryImage";
 
 const StyledClientPage = styled.main`
   margin-top: 0 !important;
