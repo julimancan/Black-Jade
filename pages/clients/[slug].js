@@ -122,9 +122,12 @@ export const getStaticProps = async ({ params }) => {
     api_secret: process.env.CLOUD_API_SECRET,
     secure: true,
   });
+
+
+  console.log(Date.parse(new Date()));
   const zipDownloadUrl = await cloudinary.utils.download_folder(
     `Clients/${slug}`,
-    { flatten_folders: true, target_public_id: slug },
+    { flatten_folders: true, target_public_id: slug, timestamp: Date.parse(new Date())},
     (error, result) => result
   );
   const { resources, next_cursor: nextCursor } = clientImages;
