@@ -10,7 +10,6 @@ const StyledImage = styled.picture`
 `;
 
 const CloudinaryImage = ({ src, alt, width, height, classNames = "" }) => {
-  console.log({ src, alt });
   return (
     <StyledImage className={`${classNames}`} width={width} height={height}>
       <img src={src} alt={alt}  />
