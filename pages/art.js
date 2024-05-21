@@ -72,12 +72,12 @@ const Art = ({ siteConfig, navMenuItems, artItems }) => {
         {mode !== pageOptions[2] &&
           artItems.images.map((art, index) => (
             <div key={index}>
-              <Image
+              <img
                 src={art.url}
                 alt={art.alt}
                 width="350px"
                 height="350px"
-                objectFit="cover"
+                // objectFit="cover"
               />
             </div>
           ))}

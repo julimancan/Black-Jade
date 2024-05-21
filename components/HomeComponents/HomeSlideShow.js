@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { securePhoto } from "../../utils/helpers";
-import Image from "next/image";
 
 const ImageComp = styled.div`
   overflow: hidden;
@@ -71,7 +70,7 @@ const HomeSlideShow = ({ photos }) => {
             onClick={nextImage}
           >
             <div className="slide-show-image">
-              <Image
+              <img
                 src={securePhoto(photo.url)}
                 alt={`Black Jade Image Background ${index + 1}`}
                 layout="fill"
