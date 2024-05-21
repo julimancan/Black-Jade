@@ -18,16 +18,19 @@ const StyledImage = styled.div`
     position: relative;
     width: 100vw;
     height: 100vh;
-    background: black;
+    /* background: black; */
     .slideshow-img {
+      position: absolute;
       margin-left: auto;
       margin-right: auto;
       object-fit: cover;
       top: 0;
       left: 0;
       filter: grayscale(80%);
-      background-size: 100vw 100% cover;
-      background-position: center;
+      width: 100vw;
+      height: 100vh;
+      /* background-size: 100vw 100% cover;
+      background-position: center; */
       /* animation: changeScale 6s infinite alternate-reverse; */
     }
   }
