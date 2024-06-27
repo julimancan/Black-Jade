@@ -21,6 +21,9 @@ const ArtWrapper = styled.main`
     iframe {
       margin: 0 auto;
     }
+    img {
+      object-fit: cover;
+    }
   }
   .page-nav {
   }
